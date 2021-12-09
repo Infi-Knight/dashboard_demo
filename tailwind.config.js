@@ -7,6 +7,9 @@ module.exports = {
         'ibm-plex-sans': ["'IBM Plex Sans'", 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
       },
+      colors: {
+        'cool-gray': '#E5E7EB',
+      },
     },
   },
   variants: {

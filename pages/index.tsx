@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
+import { HomeTabs } from '@/components/homeTabs';
 
 const Home: NextPage = () => {
-  return <h1 className="font-ibm-plex-sans">hello</h1>;
+  return <HomeTabs />;
 };
 
 export default Home;
