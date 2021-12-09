@@ -7,7 +7,7 @@ class MyDocument extends Document {
         <Head>
           <link href="https://fonts.googleapis.com" />
           <link href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
           <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" />
         </Head>
         <body>
