@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reach/disclosure": "^0.16.2",
     "@reach/listbox": "^0.16.2",
     "@reach/tabs": "^0.16.4",
     "@reach/visually-hidden": "^0.16.0",
