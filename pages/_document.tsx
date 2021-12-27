@@ -10,7 +10,7 @@ class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
           <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" />
         </Head>
-        <body>
+        <body className="bg-body">
           <Main />
           <NextScript />
         </body>

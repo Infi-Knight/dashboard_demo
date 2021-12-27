@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    [data-reach-custom-checkbox-input] {
+        width: 1px !important;
+        box-shadow: none;
+        outline: none;
+    }
+
+    [data-reach-custom-checkbox-container] {
+        margin: 0;
+        width: 1px !important;
+        box-shadow: none;
+        outline: none;
+    }
+
+    [data-reach-custom-checkbox-container]:focus-within {
+        box-shadow: none;
+        outline: none;
+    }
+}

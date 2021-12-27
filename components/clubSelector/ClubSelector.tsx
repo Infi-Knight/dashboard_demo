@@ -23,13 +23,13 @@ export const ClubSelector = ({
   let labelId = `club-label--${id}`;
 
   return (
-    <div>
+    <div className="grow">
       <VisuallyHidden id={labelId}>Choose a club</VisuallyHidden>
       <ListboxInput
         aria-labelledby={labelId}
         value={value}
         onChange={(value) => setValue(value)}
-        className="flex border-b border-cool-gray-200 pb-1.5"
+        className="flex border-b border-gray-200 pb-1.5 text-gray-700"
       >
         <img className="mr-6" src="/images/afc_eskilstuna.svg" />
         <ListboxButton
