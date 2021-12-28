@@ -66,7 +66,7 @@ const invoiceStatusUiData: {
     color: UiColor.RED,
   },
 };
-
+export const filterTabId = 'invoice-filter-tab';
 export type FilterProps = {
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -91,19 +91,19 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
   };
 
   return (
-    <Disclosure id="invoice-filter" open={isOpen} onChange={handleFilterOpen}>
+    <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
       <div>
         <DisclosureButton
           className={`flex items-center justify-center p-3 border rounded shadow-elevation-2 ${btnStyles}`}
         >
           <FilterIcon className="h-3.5 text-primary-blue" />
         </DisclosureButton>
-        <DisclosurePanel className="absolute left-0 w-full border border-gray-200 rounded top-24">
+        <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded md:top-[130px] lg:top-[74px]">
           <form
             onSubmit={handleFiltersSubmit}
             className="grid grid-cols-1 divide-y"
           >
-            <div className="flex items-center justify-between px-4 pt-3 md:pt-4 pb-3 md:px-6 ">
+            <div className="flex items-center justify-between px-4 pt-3 pb-3 md:pt-4 md:px-6 ">
               <span className="text-lg font-medium text-gray-700">
                 Filter results
               </span>
