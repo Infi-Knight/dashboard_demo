@@ -58,7 +58,7 @@ export const HomeTabs = (): JSX.Element => {
             </TabList>
 
             <TabPanels>
-              <TabPanel className="grid gap-y-6">
+              <TabPanel>
                 <div className="relative flex flex-wrap items-end mt-6 gap-4">
                   <div className="order-4 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
                     <ClubSelector
@@ -92,7 +92,7 @@ export const HomeTabs = (): JSX.Element => {
                     className="md:mt-4 lg:mt-6"
                   ></div>
                 )}
-                <div className="h-[50px] bg-blue-100 border rounded"></div>
+                <div className="h-[50px] mt-8 bg-blue-100 border rounded"></div>
               </TabPanel>
 
               <TabPanel>Coming soon...</TabPanel>
