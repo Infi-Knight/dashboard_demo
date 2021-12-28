@@ -15,7 +15,7 @@ export const LinkButton = React.forwardRef<LinkButtonRef, LinkButtonProps>(
         href={href}
         onClick={onClick}
         ref={ref}
-        className="flex items-center py-2 pl-6 pr-8 text-white border rounded bg-primary-blue"
+        className="flex justify-center items-center py-2 pl-6 pr-8 text-white border rounded bg-primary-blue"
         {...restProps}
       >
         {Icon && (
