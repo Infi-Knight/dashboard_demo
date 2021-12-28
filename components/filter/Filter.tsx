@@ -81,6 +81,11 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
     ? 'border-primary-blue bg-indigo-100'
     : 'border-gray-200';
 
+  const handleFiltersSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(e);
+    e.preventDefault();
+  };
+
   return (
     <Disclosure id="invoice-filter" open={isOpen} onChange={handleFilterOpen}>
       <div>
@@ -90,13 +95,16 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
           <FilterIcon className="h-3.5 text-primary-blue" />
         </DisclosureButton>
         <DisclosurePanel className="absolute left-0 w-full border border-gray-200 rounded top-24">
-          <div className="grid grid-cols-1 divide-y">
+          <form
+            onSubmit={handleFiltersSubmit}
+            className="grid grid-cols-1 divide-y"
+          >
             <p className="pt-4 pb-3 pl-6 text-lg font-medium text-gray-700">
               Filter results
             </p>
             <div className="pt-5 pb-6 pl-6">
               <p className="font-medium text-gray-700">Invoice status</p>
-              <ul className="flex flex-wrap items-center mt-4 gap-2">
+              <fieldset className="flex flex-wrap items-center mt-4 gap-2">
                 {invoiceStatuses.map((status) => {
                   const {
                     statusName,
@@ -111,19 +119,20 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                       Icon={Icon}
                       color={color}
                       statusName={statusName}
+                      name="filters"
                     />
                   );
                 })}
-              </ul>
+              </fieldset>
             </div>
             <div className="flex items-center justify-between px-6 py-3">
               <button>Clear filters</button>
               <div>
                 <button className="mr-6">Cancel</button>
-                <button>Apply</button>
+                <button type="submit">Apply</button>
               </div>
             </div>
-          </div>
+          </form>
         </DisclosurePanel>
       </div>
     </Disclosure>
