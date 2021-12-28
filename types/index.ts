@@ -8,6 +8,8 @@ export enum InvoiceStatus {
   Canceled,
 }
 
+export type SVGIcon = React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+
 export type Invoice = {
   id: string;
   invoiceNumber: number;
@@ -19,7 +21,7 @@ export type Invoice = {
   status: InvoiceStatus;
 };
 
-export enum UiColors {
+export enum UiColor {
   RED = 'red',
   AMBER = 'amber',
   VIOLET = 'violet',
