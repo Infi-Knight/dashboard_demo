@@ -41,7 +41,7 @@ export default function InvoiceFilterCheckbox({
     [color, getCheckboxStyles]
   );
 
-  const borderColor = checkedState ? labelBorder : 'border-gray-200';
+  const borderColor = checkedState ? labelBorder : 'border-transparent';
   const bgColor = checkedState ? labelBg : 'bg-gray-100';
   const iconStyles = checkedState
     ? `${svgColor} mr-2.5`
