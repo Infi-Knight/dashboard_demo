@@ -15,6 +15,7 @@ type FilterCheckBoxBaseReachUiProps = Omit<
   'children'
 > &
   CustomCheckboxInputProps;
+
 export interface InvoiceFilterCheckboxProps
   extends FilterCheckBoxBaseReachUiProps {
   statusName: string;
@@ -50,7 +51,7 @@ export default function InvoiceFilterCheckbox({
   const labelStyles = `select-none inline-flex items-center ${bgColor} p-1 pl-2.5 pr-3 border rounded-[20px] text-gray-800 cursor-pointer ${borderColor}`;
 
   return (
-    <li className="inline-block list-none">
+    <div className="inline-block list-none">
       <label className={labelStyles}>
         <CustomCheckboxContainer
           checked={checkedState}
@@ -65,6 +66,6 @@ export default function InvoiceFilterCheckbox({
           {statusName}
         </span>
       </label>
-    </li>
+    </div>
   );
 }
