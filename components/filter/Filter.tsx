@@ -5,10 +5,6 @@ import {
   DisclosurePanel,
 } from '@reach/disclosure';
 
-import { InvoiceStatus, UiColors } from '@/types/index';
-import InvoiceFilterCheckBox from '@/components/filter/InvoiceFilterCheckBox';
-
-import { invoiceStatuses } from '@/config/index';
 import FilterIcon from '@/icons/filter_icon.svg';
 import OverdueIcon from '@/icons/overdue_icon.svg';
 import NotpaidIcon from '@/icons/not_paid_icon.svg';
@@ -18,10 +14,14 @@ import PaidIcon from '@/icons/paid_icon.svg';
 import OverpaidIcon from '@/icons/overpaid_icon.svg';
 import CanceledIcon from '@/icons/not_paid_icon.svg';
 
+import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
+import InvoiceFilterCheckBox from '@/components/filter/InvoiceFilterCheckBox';
+import { invoiceStatuses } from '@/config/index';
+
 type StatusUiDataType = {
   statusName: string;
-  icon: JSX.Element;
-  color: UiColors;
+  icon: SVGIcon;
+  color: UiColor;
 };
 const invoiceStatusUiData: {
   [key in InvoiceStatus]: StatusUiDataType;
@@ -29,41 +29,41 @@ const invoiceStatusUiData: {
   [InvoiceStatus.Overdue]: {
     statusName: 'Overdue',
     icon: OverdueIcon,
-    color: UiColors.RED,
+    color: UiColor.RED,
   },
   [InvoiceStatus.NotPaid]: {
     statusName: 'Not paid',
     icon: NotpaidIcon,
-    color: UiColors.AMBER,
+    color: UiColor.AMBER,
   },
   [InvoiceStatus.PartlyPaid]: {
     statusName: 'Partly paid',
     icon: PartlyPaidIcon,
-    color: UiColors.VIOLET,
+    color: UiColor.VIOLET,
   },
   [InvoiceStatus.Credited]: {
     statusName: 'Credited',
     icon: CreditedIcon,
-    color: UiColors.BLUE,
+    color: UiColor.BLUE,
   },
   [InvoiceStatus.Paid]: {
     statusName: 'Paid',
     icon: PaidIcon,
-    color: UiColors.EMERALD,
+    color: UiColor.EMERALD,
   },
   [InvoiceStatus.Overpaid]: {
     statusName: 'Overpaid',
     icon: OverpaidIcon,
-    color: UiColors.EMERALD,
+    color: UiColor.EMERALD,
   },
   [InvoiceStatus.Canceled]: {
     statusName: 'Canceled',
     icon: CanceledIcon,
-    color: UiColors.RED,
+    color: UiColor.RED,
   },
 };
 
-type FilterProps = {
+export type FilterProps = {
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
@@ -103,15 +103,15 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                     icon: Icon,
                     color,
                   } = invoiceStatusUiData[status];
+
                   return (
                     <InvoiceFilterCheckBox
                       key={statusName}
                       value={status}
                       Icon={Icon}
                       color={color}
-                    >
-                      {statusName}
-                    </InvoiceFilterCheckBox>
+                      statusName={statusName}
+                    />
                   );
                 })}
               </ul>

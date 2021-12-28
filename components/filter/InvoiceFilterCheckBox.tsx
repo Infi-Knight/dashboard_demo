@@ -1,71 +1,30 @@
 import * as React from 'react';
 import {
   CustomCheckbox,
+  CustomCheckboxProps,
   CustomCheckboxContainer,
   CustomCheckboxInput,
-  CustomCheckboxInputProps,
+  MixedOrBool,
 } from '@reach/checkbox';
-import { UiColors } from '@/types/index';
+import { SVGIcon, UiColor } from '@/types/index';
+import { getCheckboxStyles } from '@/components/filter/utils';
 
-// https://tailwindcss.com/docs/content-configuration#class-detection-in-depth
-function getCheckboxStyles(color: UiColors): {
-  labelBorder: string;
-  labelBg: string;
-  svgColor: string;
-} {
-  switch (color) {
-    case UiColors.RED:
-      return {
-        labelBorder: 'border-red-600',
-        labelBg: 'bg-red-100',
-        svgColor: 'text-red-700',
-      };
-      break;
-    case UiColors.EMERALD:
-      return {
-        labelBorder: 'border-emerald-600',
-        labelBg: 'bg-emerald-100',
-        svgColor: 'text-emerald-700',
-      };
-      break;
-    case UiColors.VIOLET:
-      return {
-        labelBorder: 'border-violet-600',
-        labelBg: 'bg-violet-100',
-        svgColor: 'text-violet-700',
-      };
-      break;
-    case UiColors.BLUE:
-      return {
-        labelBorder: 'border-blue-600',
-        labelBg: 'bg-blue-100',
-        svgColor: 'text-blue-700',
-      };
-      break;
-    case UiColors.AMBER:
-      return {
-        labelBorder: 'border-amber-600',
-        labelBg: 'bg-amber-100',
-        svgColor: 'text-amber-700',
-      };
-      break;
-    default:
-      return {
-        labelBorder: '',
-        labelBg: 'bg-gray-100',
-        svgColor: 'text-gray-500',
-      };
-      break;
-  }
+interface InvoiceFilterCheckboxProps extends CustomCheckboxProps {
+  statusName: string;
+  // Icon is JSX Element: should be called like this:
+  // <div>{Icon}</div>, and not like this:  <div><Icon /></div>
+  Icon: SVGIcon;
+  color: UiColor;
 }
 export default function InvoiceFilterCheckbox({
-  children,
   Icon,
   color,
-  ...props
-}: any): JSX.Element {
-  const [checkedState, setChecked] = React.useState(props.checked || false);
-  const checked = props.checked != null ? props.checked : checkedState;
+  statusName,
+  checked,
+  ...rest
+}: InvoiceFilterCheckboxProps): JSX.Element {
+  const [checkedState, setChecked] = React.useState(checked || false);
+  const isChecked = checked != undefined ? checked : checkedState;
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
@@ -86,19 +45,19 @@ export default function InvoiceFilterCheckbox({
   const labelStyles = `select-none inline-flex items-center ${bgColor} p-1 pl-2.5 pr-3 border rounded-[20px] text-gray-800 cursor-pointer ${borderColor}`;
 
   return (
-    <li className="list-none inline-block">
+    <li className="inline-block list-none">
       <label className={labelStyles}>
         <CustomCheckboxContainer
-          checked={props.checked != null ? props.checked : checked}
+          checked={checked != undefined ? checked : isChecked}
           onChange={handleCheckboxChange}
         >
-          <CustomCheckboxInput {...props} />
+          <CustomCheckboxInput {...rest} />
         </CustomCheckboxContainer>
         <span className={iconStyles}>
           <Icon />
         </span>
         <span className="text-xs font-medium text-gray-800 font-montserrat">
-          {children}
+          {statusName}
         </span>
       </label>
     </li>

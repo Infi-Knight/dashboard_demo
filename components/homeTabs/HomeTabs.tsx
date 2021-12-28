@@ -43,9 +43,7 @@ export const HomeTabs = (): JSX.Element => {
                   <Filter setIsFilterTabOpen={setIsFilterTabOpen} />
                   <Search />
                   <Link href="#" passHref>
-                    <LinkButton icon={<NewInvoiceIcon />}>
-                      New Invoice
-                    </LinkButton>
+                    <LinkButton Icon={NewInvoiceIcon}>New Invoice</LinkButton>
                   </Link>
                 </div>
                 {isFilterTabOpen && (
