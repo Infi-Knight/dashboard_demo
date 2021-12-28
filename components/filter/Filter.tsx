@@ -13,9 +13,13 @@ import CreditedIcon from '@/icons/credited_icon.svg';
 import PaidIcon from '@/icons/paid_icon.svg';
 import OverpaidIcon from '@/icons/overpaid_icon.svg';
 import CanceledIcon from '@/icons/not_paid_icon.svg';
+import ClearIcon from '@/icons/clear_icon.svg';
+import DoneIcon from '@/icons/done_icon.svg';
+import DeleteIcon from '@/icons/delete_icon.svg';
 
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
 import InvoiceFilterCheckBox from '@/components/filter/InvoiceFilterCheckBox';
+import { Button } from '@/components/button';
 import { invoiceStatuses } from '@/config/index';
 
 type StatusUiDataType = {
@@ -99,10 +103,21 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
             onSubmit={handleFiltersSubmit}
             className="grid grid-cols-1 divide-y"
           >
-            <p className="pt-4 pb-3 pl-6 text-lg font-medium text-gray-700">
-              Filter results
-            </p>
-            <div className="pt-5 pb-6 pl-6">
+            <div className="flex items-center justify-between px-4 pt-3 md:pt-4 pb-3 md:px-6 ">
+              <span className="text-lg font-medium text-gray-700">
+                Filter results
+              </span>
+              <div className="md:hidden">
+                <Button
+                  Icon={DeleteIcon}
+                  className="text-gray-600"
+                  variant="secondary"
+                >
+                  Clear filters
+                </Button>
+              </div>
+            </div>
+            <div className="px-4 pt-5 pb-6 md:px-6">
               <p className="font-medium text-gray-700">Invoice status</p>
               <fieldset className="flex flex-wrap items-center mt-4 gap-2">
                 {invoiceStatuses.map((status) => {
@@ -125,11 +140,27 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                 })}
               </fieldset>
             </div>
-            <div className="flex items-center justify-between px-6 py-3">
-              <button>Clear filters</button>
-              <div>
-                <button className="mr-6">Cancel</button>
-                <button type="submit">Apply</button>
+            <div className="flex items-center justify-between px-4 py-3 md:px-6">
+              <div className="hidden md:block">
+                <Button
+                  Icon={DeleteIcon}
+                  className="text-gray-600"
+                  variant="secondary"
+                >
+                  Clear filters
+                </Button>
+              </div>
+              <div className="flex">
+                <Button
+                  Icon={ClearIcon}
+                  variant="secondary"
+                  className="mr-6 text-red-700"
+                >
+                  Cancel
+                </Button>
+                <Button Icon={DoneIcon} type="submit">
+                  Apply filters
+                </Button>
               </div>
             </div>
           </form>

@@ -14,12 +14,12 @@ const Search = () => {
     <div className="border rounded grow shadow-elevation-2">
       <Combobox
         aria-labelledby="search"
-        className="flex items-center w-full px-4 py-2 grow bordergray-200"
+        className="flex items-center w-full px-4 py-2 border-gray-200 grow"
       >
-        <SearchIcon className="mr-3 textgray-400" />
+        <SearchIcon className="mr-3 text-gray-400" />
         <ComboboxInput
           placeholder="Search by name, email, birthdate..."
-          className="w-full outline-none text-sm"
+          className="w-full text-sm outline-none bg-body"
         />
         <ComboboxPopover>
           <ComboboxList>

@@ -2,33 +2,36 @@ import * as React from 'react';
 import Link, { LinkProps } from 'next/link';
 import { SVGIcon } from '@/types/index';
 
-interface LinkButtonProps extends React.ComponentPropsWithoutRef<'a'> {
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   Icon?: SVGIcon;
+  variant?: 'primary' | 'secondary';
 }
-type LinkButtonRef = HTMLAnchorElement;
 
-// eslint-disable-next-line react/display-name
-export const LinkButton = React.forwardRef<LinkButtonRef, LinkButtonProps>(
-  ({ href, onClick, children, Icon, className = '', ...restProps }, ref) => {
-    return (
-      <a
-        href={href}
-        onClick={onClick}
-        ref={ref}
-        className="flex justify-center items-center py-2 pl-6 pr-8 text-white border rounded bg-primary-blue"
-        {...restProps}
-      >
-        {Icon && (
-          <span className="px-1 py-0.5">
-            <Icon />
-          </span>
-        )}
-        <span
-          className={`ml-2 text-sm font-semibold tracking-[0.02em] ${className}`}
-        >
-          {children}
+export const Button = ({
+  onClick,
+  children,
+  Icon,
+  variant = 'primary',
+  className = '',
+  ...restProps
+}: ButtonProps) => {
+  const btnVariantClasses =
+    variant === 'primary'
+      ? 'bg-primary-blue border rounded pl-6 pr-8'
+      : 'bg-transparent border-0';
+
+  return (
+    <button
+      onClick={onClick}
+      className={`flex text-sm justify-center items-center py-2 text-white ${btnVariantClasses} ${className}`}
+      {...restProps}
+    >
+      {Icon && (
+        <span className="mr-3">
+          <Icon />
         </span>
-      </a>
-    );
-  }
-);
+      )}
+      <span className="font-semibold tracking-[0.02em]">{children}</span>
+    </button>
+  );
+};
