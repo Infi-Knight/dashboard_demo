@@ -96,7 +96,7 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
             </p>
             <div className="pt-5 pb-6 pl-6">
               <p className="font-medium text-gray-700">Invoice status</p>
-              <div className="flex items-center mt-4 wrap">
+              <ul className="flex flex-wrap items-center mt-4 gap-2">
                 {invoiceStatuses.map((status) => {
                   const {
                     statusName,
@@ -114,7 +114,7 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                     </InvoiceFilterCheckBox>
                   );
                 })}
-              </div>
+              </ul>
             </div>
             <div className="flex items-center justify-between px-6 py-3">
               <button>Clear filters</button>

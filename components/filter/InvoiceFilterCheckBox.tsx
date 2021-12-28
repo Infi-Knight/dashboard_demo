@@ -83,22 +83,24 @@ export default function InvoiceFilterCheckbox({
     : 'text-gray-500 mr-2.5';
 
   // TODO: fix keyboard focus styles e.g by a focus ring on label using focus-within. looks ugly though?
-  const labelStyles = `flex items-center ${bgColor} p-1 pl-2.5 pr-3 border rounded-[20px] text-gray-800 cursor-pointer ${borderColor}`;
+  const labelStyles = `select-none inline-flex items-center ${bgColor} p-1 pl-2.5 pr-3 border rounded-[20px] text-gray-800 cursor-pointer ${borderColor}`;
 
   return (
-    <label className={labelStyles}>
-      <CustomCheckboxContainer
-        checked={props.checked != null ? props.checked : checked}
-        onChange={handleCheckboxChange}
-      >
-        <CustomCheckboxInput {...props} />
-      </CustomCheckboxContainer>
-      <span className={iconStyles}>
-        <Icon />
-      </span>
-      <span className="text-xs font-medium text-gray-800 font-montserrat">
-        {children}
-      </span>
-    </label>
+    <li className="list-none inline-block">
+      <label className={labelStyles}>
+        <CustomCheckboxContainer
+          checked={props.checked != null ? props.checked : checked}
+          onChange={handleCheckboxChange}
+        >
+          <CustomCheckboxInput {...props} />
+        </CustomCheckboxContainer>
+        <span className={iconStyles}>
+          <Icon />
+        </span>
+        <span className="text-xs font-medium text-gray-800 font-montserrat">
+          {children}
+        </span>
+      </label>
+    </li>
   );
 }
