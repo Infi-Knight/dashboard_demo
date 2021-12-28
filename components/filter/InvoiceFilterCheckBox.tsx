@@ -1,18 +1,23 @@
 import * as React from 'react';
 import {
-  CustomCheckbox,
-  CustomCheckboxProps,
   CustomCheckboxContainer,
+  CustomCheckboxContainerProps,
   CustomCheckboxInput,
-  MixedOrBool,
+  CustomCheckboxInputProps,
 } from '@reach/checkbox';
+
 import { SVGIcon, UiColor } from '@/types/index';
 import { getCheckboxStyles } from '@/components/filter/utils';
 
-interface InvoiceFilterCheckboxProps extends CustomCheckboxProps {
+// InvoiceFilterCheckbox does not require a children prop
+type FilterCheckBoxBaseReachUiProps = Omit<
+  CustomCheckboxContainerProps,
+  'children'
+> &
+  CustomCheckboxInputProps;
+export interface InvoiceFilterCheckboxProps
+  extends FilterCheckBoxBaseReachUiProps {
   statusName: string;
-  // Icon is JSX Element: should be called like this:
-  // <div>{Icon}</div>, and not like this:  <div><Icon /></div>
   Icon: SVGIcon;
   color: UiColor;
 }
@@ -21,10 +26,10 @@ export default function InvoiceFilterCheckbox({
   color,
   statusName,
   checked,
-  ...rest
+  name,
+  value,
 }: InvoiceFilterCheckboxProps): JSX.Element {
   const [checkedState, setChecked] = React.useState(checked || false);
-  const isChecked = checked != undefined ? checked : checkedState;
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
@@ -48,10 +53,10 @@ export default function InvoiceFilterCheckbox({
     <li className="inline-block list-none">
       <label className={labelStyles}>
         <CustomCheckboxContainer
-          checked={checked != undefined ? checked : isChecked}
+          checked={checkedState}
           onChange={handleCheckboxChange}
         >
-          <CustomCheckboxInput {...rest} />
+          <CustomCheckboxInput name={name} value={value} />
         </CustomCheckboxContainer>
         <span className={iconStyles}>
           <Icon />
