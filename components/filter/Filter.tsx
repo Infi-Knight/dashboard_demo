@@ -98,7 +98,7 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
         >
           <FilterIcon className="h-3.5 text-primary-blue" />
         </DisclosureButton>
-        <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded md:top-[130px] lg:top-[74px]">
+        <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded top-[130px] md:top-[140px] lg:top-[74px]">
           <form
             onSubmit={handleFiltersSubmit}
             className="grid grid-cols-1 divide-y"

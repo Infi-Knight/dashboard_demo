@@ -10,15 +10,13 @@ import { LinkButton } from '@/components/button';
 import { filterTabId } from '@/components/filter/Filter';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
-
 // TODO: https://css-tricks.com/bold-on-hover-without-the-layout-shift/
 // fix the shift due to font weight change on tab change
 export const HomeTabs = (): JSX.Element => {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
-  const [phantomDivHeight, setPhantomDivHeight] = React.useState(0);
 
-  // TODO: move this to a custom hook
-  React.useLayoutEffect(() => {
+  // TODO: clean up the code and fix any perf issues in this handler and associated useEffect down below
+  const handlePhantomDivResize = () => {
     // Filter tab is positioned absolutely. So when it opens we need to move the
     // invoice table by the same amount otherwise this tab will appear over the table.
     // to fix this we create a ghost div whose only job is to take as much space as required
@@ -27,17 +25,42 @@ export const HomeTabs = (): JSX.Element => {
     // this is because tailwind needs to know beforehand the actual class name somewhere in code
     // which in our case won't be available as the filter tab's height may vary and it won't make sense
     // to hardcode some pixels!
-    if (isFilterTabOpen) {
-      const filterTab = document.querySelector(
-        `#panel--${filterTabId}`
-      ) as HTMLDivElement;
-      if (filterTab !== null) {
-        setPhantomDivHeight(filterTab.offsetHeight);
+    const filterTab = document.querySelector(
+      `#panel--${filterTabId}`
+    ) as HTMLDivElement;
+    const phantomDivTabletAndDesktop = document.querySelector(
+      `#phantom-div`
+    ) as HTMLDivElement;
+    const phantomDivMobile = document.querySelector(
+      `#phantom-div-2`
+    ) as HTMLDivElement;
+
+    if (isFilterTabOpen && filterTab !== null) {
+      const filterTabHeight = filterTab.offsetHeight;
+      if (phantomDivTabletAndDesktop !== null) {
+        phantomDivTabletAndDesktop.style.height = `${filterTabHeight}px`;
+      }
+      if (phantomDivMobile !== null) {
+        console.log('dfsdfs');
+        phantomDivMobile.style.height = `${filterTabHeight}px`;
+        phantomDivMobile.style.marginBottom = `2rem`;
       }
     } else {
-      setPhantomDivHeight(0);
+      if (phantomDivTabletAndDesktop !== null) {
+        phantomDivTabletAndDesktop.style.height = `0px`;
+      }
+      if (phantomDivMobile !== null) {
+        phantomDivMobile.style.height = `0px`;
+        phantomDivMobile.style.marginBottom = `0px`;
+      }
     }
-  }, [isFilterTabOpen]);
+  };
+  // TODO: move this to a custom hook
+  React.useEffect(() => {
+    handlePhantomDivResize();
+    window.addEventListener('resize', handlePhantomDivResize);
+    return () => window.removeEventListener('resize', handlePhantomDivResize);
+  }, [isFilterTabOpen, handlePhantomDivResize]);
 
   return (
     <Tabs>
@@ -61,6 +84,9 @@ export const HomeTabs = (): JSX.Element => {
               <TabPanel>
                 <div className="relative flex flex-wrap items-end mt-6 gap-4">
                   <div className="order-4 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
+                    {/* this div makes space for filter tab when it is opened */}
+                    {/* this div's height is equal to the height of filter tab */}
+                    <div id="phantom-div-2" className="md:hidden"></div>
                     <ClubSelector
                       id="invoice"
                       clubs={['AFC Eskilstuna', 'AIK Atlas', 'Adolfsbergs IK']}
@@ -85,13 +111,10 @@ export const HomeTabs = (): JSX.Element => {
 
                 {/* this div makes space for filter tab when it is opened */}
                 {/* this div's height is equal to the height of filter tab */}
-                {isFilterTabOpen && (
-                  <div
-                    id="phantom-div"
-                    style={{ height: `${phantomDivHeight}px` }}
-                    className="md:mt-4 lg:mt-6"
-                  ></div>
-                )}
+                <div
+                  id="phantom-div"
+                  className="hidden md:block md:mt-4 lg:mt-6"
+                ></div>
                 <div className="h-[50px] mt-8 bg-blue-100 border rounded"></div>
               </TabPanel>
 
