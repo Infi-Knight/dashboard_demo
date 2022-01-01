@@ -4,12 +4,14 @@
 
 ## TODO
 
+- responsive ui for table on mobile and tablet
+- proper i18n setup
+- fix svg not properly rendering in the table
 - write and mock server APIs
 - wire up state and data fetching with the mocked data
-- fix svg not properly rendering in the table
 - write tests
 - perf fixes
-- cleanup folder structure
+- cleanup code
 
 ## fixing svg use in nextjs with svgr
 
