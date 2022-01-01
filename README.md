@@ -12,8 +12,13 @@
 - perf fixes
 - cleanup code
 
-## fixing svg use in nextjs with svgr
+## libraries used
+- [Reach UI](https://reach.tech/) as a building block for accessible components
+- [SVGR](https://react-svgr.com/) for handling svg icons
+
+### Some problems I encountered and their fixes 
+
+#### fixing svg use in nextjs with svgr
 
 - https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
-
 - https://duncanleung.com/next-js-typescript-svg-any-module-declaration/
