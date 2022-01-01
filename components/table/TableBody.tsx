@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from '@reach/accordion';
 
 import { Invoice } from '@/types/index';
 import { LinkButton } from '@/components/button';
@@ -20,7 +26,7 @@ export const TableBody = React.memo(function TableBodyUI({
   // the inbuilt a11y semantics. Nasty to style though
   return (
     <>
-      <div role="presentation" className="hidden lg:block ">
+      <div role="presentation" className="hidden lg:block">
         {data.map(
           ({
             invoiceNumber,
@@ -69,6 +75,35 @@ export const TableBody = React.memo(function TableBodyUI({
             );
           }
         )}
+      </div>
+
+      <div className="lg:hidden grid gap-y-0 md:gap-y-2">
+        <Accordion
+          collapsible
+          multiple
+          className="p-4 bg-white border-b border-gray-200"
+        >
+          <AccordionItem>
+            <h3>
+              <AccordionButton>Step 1: Do a thing</AccordionButton>
+            </h3>
+            <AccordionPanel>
+              Integer ad iaculis semper aenean nibh quisque hac eget volutpat,
+              at dui sem accumsan cras congue mi varius egestas interdum,
+              molestie blandit sociosqu sodales diam metus erat venenatis.
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <h3>
+              <AccordionButton>Step 2: Do another thing</AccordionButton>
+            </h3>
+            <AccordionPanel>
+              Hendrerit faucibus litora justo aliquet inceptos gravida felis vel
+              aenean, natoque fermentum nostra tempus ornare nam diam est, neque
+              risus aliquam sapien vestibulum sociis integer eros.
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
       </div>
     </>
   );

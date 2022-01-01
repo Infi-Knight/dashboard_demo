@@ -29,7 +29,7 @@ export const ClubSelector = ({
         aria-labelledby={labelId}
         value={value}
         onChange={(value) => setValue(value)}
-        className="flex border-b border-gray-200 pb-1.5 text-gray-700"
+        className="flex border-0 md:border-b md:border-gray-200 pb-1.5 text-gray-700"
       >
         <img className="mr-6" src="/images/afc_eskilstuna.svg" />
         <ListboxButton

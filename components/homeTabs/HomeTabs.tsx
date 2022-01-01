@@ -28,7 +28,7 @@ export const HomeTabs = (): JSX.Element => {
         };
         return (
           <React.Fragment>
-            <TabList className="mx-4 md:mx-6 lg:mx-12 border-b border-gray-200 bg-body">
+            <TabList className="mx-4 border-b border-gray-200 md:mx-6 lg:mx-12 bg-body">
               <Tab className={`px-2.5 py-4 ${getTabStyle(0)}`}>Invoices</Tab>
               <Tab className={`px-2.5 py-4 ${getTabStyle(1)}`}>Drafts</Tab>
             </TabList>
@@ -54,7 +54,7 @@ const InvoicesPanelBody = React.memo(function InvoicesPanelBody() {
       {/* this div makes space for filter tab when it is opened */}
       {/* this div's height is equal to the height of filter tab */}
       <div id="phantom-div" className="hidden md:block md:mt-4 lg:mt-6"></div>
-      <div className="mx-auto mt-8 max-w-screen-xl">
+      <div className="mx-auto mt-0 border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl">
         <Table />
       </div>
     </>
