@@ -13,6 +13,7 @@ import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
 import Table from '@/components/table';
 // TODO: https://css-tricks.com/bold-on-hover-without-the-layout-shift/
 // fix the shift due to font weight change on tab change
+// TODO: fix margins on > 1280px
 export const HomeTabs = (): JSX.Element => {
   return (
     <Tabs>
@@ -27,7 +28,7 @@ export const HomeTabs = (): JSX.Element => {
         };
         return (
           <React.Fragment>
-            <TabList className="border-b border-gray-200 bg-body">
+            <TabList className="mx-4 md:mx-6 lg:mx-12 border-b border-gray-200 bg-body">
               <Tab className={`px-2.5 py-4 ${getTabStyle(0)}`}>Invoices</Tab>
               <Tab className={`px-2.5 py-4 ${getTabStyle(1)}`}>Drafts</Tab>
             </TabList>
@@ -110,7 +111,7 @@ const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
   }, [isFilterTabOpen, handlePhantomDivResize]);
 
   return (
-    <div className="relative flex flex-wrap items-end mt-6 gap-4">
+    <div className="relative flex flex-wrap items-end mx-4 mt-6 md:mx-6 lg:mx-12 gap-4">
       <div className="order-4 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}

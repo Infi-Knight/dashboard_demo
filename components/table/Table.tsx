@@ -136,7 +136,10 @@ const Table = React.memo(function Table() {
   // }, []);
 
   return (
-    <section role="grid" className="bg-white border-0 lg:border lg:rounded">
+    <section
+      role="grid"
+      className="bg-white border-0 lg:border lg:rounded mx-4 md:mx-6 lg:mx-12 "
+    >
       <TableHeader />
       <TableBody data={data} />
     </section>

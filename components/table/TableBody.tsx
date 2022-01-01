@@ -20,7 +20,7 @@ export const TableBody = React.memo(function TableBodyUI({
   // the inbuilt a11y semantics. Nasty to style though
   return (
     <>
-      <div role="hidden lg:block presentation">
+      <div role="presentation" className="hidden lg:block ">
         {data.map(
           ({
             invoiceNumber,
