@@ -4,12 +4,24 @@ import { SVGIcon } from '@/types/index';
 
 interface LinkButtonProps extends React.ComponentPropsWithoutRef<'a'> {
   Icon?: SVGIcon;
+  iconColor?: string;
 }
 type LinkButtonRef = HTMLAnchorElement;
 
 // eslint-disable-next-line react/display-name
 export const LinkButton = React.forwardRef<LinkButtonRef, LinkButtonProps>(
-  ({ href, onClick, children, Icon, className = '', ...restProps }, ref) => {
+  (
+    {
+      href,
+      onClick,
+      children,
+      Icon,
+      iconColor = '',
+      className = '',
+      ...restProps
+    },
+    ref
+  ) => {
     return (
       <a
         href={href}
@@ -19,7 +31,7 @@ export const LinkButton = React.forwardRef<LinkButtonRef, LinkButtonProps>(
         {...restProps}
       >
         {Icon && (
-          <span className="px-1 py-0.5">
+          <span className={`px-1 py-0.5 ${iconColor}`}>
             <Icon />
           </span>
         )}
