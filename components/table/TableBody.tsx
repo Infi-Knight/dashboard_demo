@@ -26,7 +26,7 @@ export const TableBody = React.memo(function TableBodyUI({
   // the inbuilt a11y semantics. Nasty to style though
   return (
     <>
-      <div role="presentation" className="hidden lg:block">
+      <div role="presentation" className="hidden xl:block">
         {data.map(
           ({
             invoiceNumber,
@@ -77,7 +77,7 @@ export const TableBody = React.memo(function TableBodyUI({
         )}
       </div>
 
-      <div className="lg:hidden grid gap-y-0 md:gap-y-2">
+      <div className="xl:hidden grid gap-y-0 md:gap-y-2">
         {data.map(({ invoiceDate, total }) => {
           return (
             <Accordion
