@@ -11,7 +11,7 @@ import SearchIcon from '@/icons/search_icon.svg';
 
 const Search = () => {
   return (
-    <div className="border rounded grow shadow-elevation-2">
+    <div className="border rounded grow shadow-elevation-2 bg-white">
       <Combobox
         aria-labelledby="search"
         className="flex items-center w-full px-4 py-2 border-gray-200 grow"

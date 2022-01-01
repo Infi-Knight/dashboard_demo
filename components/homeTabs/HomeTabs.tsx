@@ -10,6 +10,7 @@ import { LinkButton } from '@/components/button';
 import { filterTabId } from '@/components/filter/Filter';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
+import Table from '../table';
 // TODO: https://css-tricks.com/bold-on-hover-without-the-layout-shift/
 // fix the shift due to font weight change on tab change
 export const HomeTabs = (): JSX.Element => {
@@ -41,7 +42,6 @@ export const HomeTabs = (): JSX.Element => {
         phantomDivTabletAndDesktop.style.height = `${filterTabHeight}px`;
       }
       if (phantomDivMobile !== null) {
-        console.log('dfsdfs');
         phantomDivMobile.style.height = `${filterTabHeight}px`;
         phantomDivMobile.style.marginBottom = `2rem`;
       }
@@ -115,7 +115,9 @@ export const HomeTabs = (): JSX.Element => {
                   id="phantom-div"
                   className="hidden md:block md:mt-4 lg:mt-6"
                 ></div>
-                <div className="h-[50px] mt-8 bg-blue-100 border rounded"></div>
+                <div className="mt-8">
+                  <Table />
+                </div>
               </TabPanel>
 
               <TabPanel>Coming soon...</TabPanel>

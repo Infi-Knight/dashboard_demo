@@ -27,7 +27,7 @@ type StatusUiDataType = {
   icon: SVGIcon;
   color: UiColor;
 };
-const invoiceStatusUiData: {
+export const invoiceStatusUiData: {
   [key in InvoiceStatus]: StatusUiDataType;
 } = {
   [InvoiceStatus.Overdue]: {
@@ -94,7 +94,7 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
       <div>
         <DisclosureButton
-          className={`flex items-center justify-center p-3 border rounded shadow-elevation-2 ${btnStyles}`}
+          className={`flex bg-white items-center justify-center p-3 border rounded shadow-elevation-2 ${btnStyles}`}
         >
           <FilterIcon className="h-3.5 text-primary-blue" />
         </DisclosureButton>
