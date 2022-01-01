@@ -4,7 +4,7 @@ export const TableHeader = React.memo(function TableHeaderUI() {
   return (
     <div
       role="presentation"
-      className="hidden lg:block px-4 md:px-6 pt-3.5 pb-[0.9375rem] border-b border-gray-200"
+      className="hidden xl:block px-4 md:px-6 pt-3.5 pb-[0.9375rem] border-b border-gray-200"
     >
       <div
         role="row"

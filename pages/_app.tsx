@@ -5,6 +5,7 @@ import '@reach/tabs/styles.css';
 import '@reach/listbox/styles.css';
 import '@reach/combobox/styles.css';
 import '@reach/checkbox/styles.css';
+import '@reach/accordion/styles.css';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 

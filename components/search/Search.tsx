@@ -19,7 +19,7 @@ const Search = () => {
         <SearchIcon className="mr-3 text-gray-400" />
         <ComboboxInput
           placeholder="Search by name, email, birthdate..."
-          className="w-full text-sm outline-none bg-body"
+          className="w-full text-sm outline-none"
         />
         <ComboboxPopover>
           <ComboboxList>
