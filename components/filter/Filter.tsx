@@ -72,6 +72,10 @@ export type FilterProps = {
 };
 const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
+  const [filters, setFilters] = React.useState<InvoiceStatus[]>([
+    InvoiceStatus.Canceled,
+    InvoiceStatus.Overpaid,
+  ]);
 
   React.useEffect(() => {
     setIsFilterTabOpen(isOpen);
@@ -83,21 +87,28 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
 
   const btnStyles = isOpen
     ? 'border-primary-blue bg-indigo-100'
-    : 'border-gray-200';
+    : 'bg-white border-gray-200';
 
   const handleFiltersSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(e);
     e.preventDefault();
   };
 
   return (
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
       <div>
-        <DisclosureButton
-          className={`flex bg-white items-center justify-center p-3 border rounded shadow-elevation-2 ${btnStyles}`}
-        >
-          <FilterIcon className="h-3.5 text-primary-blue" />
-        </DisclosureButton>
+        <div className="relative">
+          {filters.length > 0 && !isOpen && (
+            <span className="flex font-bold justify-center items-center text-[10px] absolute h-3.5 w-3.5 bg-primary-blue text-white rounded-full top-[-7px] right-[-7px]">
+              {filters.length}
+            </span>
+          )}
+
+          <DisclosureButton
+            className={`flex items-center justify-center p-3 border rounded shadow-elevation-2 ${btnStyles}`}
+          >
+            <FilterIcon className="h-3.5 text-primary-blue" />
+          </DisclosureButton>
+        </div>
         <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded top-[130px] md:top-[140px] lg:top-[74px]">
           <form
             onSubmit={handleFiltersSubmit}
