@@ -14,6 +14,8 @@ import Table from '@/components/table';
 // TODO: https://css-tricks.com/bold-on-hover-without-the-layout-shift/
 // fix the shift due to font weight change on tab change
 // TODO: fix margins on > 1280px
+//
+const invoicesPanelBodyId = 'invoices-panel-body';
 export const HomeTabs = (): JSX.Element => {
   return (
     <Tabs>
@@ -54,7 +56,10 @@ const InvoicesPanelBody = React.memo(function InvoicesPanelBody() {
       {/* this div makes space for filter tab when it is opened */}
       {/* this div's height is equal to the height of filter tab */}
       <div id="phantom-div" className="hidden md:block md:mt-4 lg:mt-6"></div>
-      <div className="mx-auto mt-[6px] border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl">
+      <div
+        id={invoicesPanelBodyId}
+        className="mx-auto mt-[6px] border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl"
+      >
         <Table />
       </div>
     </>
@@ -103,8 +108,21 @@ const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
       }
     }
   };
+  const handleInvoicesBodyOpacityOnFilterOpen = () => {
+    const invoicesPanelBody = document.querySelector(
+      `#${invoicesPanelBodyId}`
+    ) as HTMLDivElement;
+    if (invoicesPanelBody !== null) {
+      if (isFilterTabOpen) {
+        invoicesPanelBody.style.opacity = '0.5';
+      } else {
+        invoicesPanelBody.style.opacity = '1';
+      }
+    }
+  };
   // TODO: move this to a custom hook
   React.useEffect(() => {
+    handleInvoicesBodyOpacityOnFilterOpen();
     handlePhantomDivResize();
     window.addEventListener('resize', handlePhantomDivResize);
     return () => window.removeEventListener('resize', handlePhantomDivResize);
