@@ -19,10 +19,7 @@ const StatusBadge = React.memo(function StatusBadge({
     statusName,
     icon: Icon,
     color,
-  } = React.useMemo(
-    () => invoiceStatusUiData[status],
-    [status, invoiceStatusUiData]
-  );
+  } = React.useMemo(() => invoiceStatusUiData[status], [status]);
 
   let badgeText = statusName;
   if (status === InvoiceStatus.PartlyPaid) {
@@ -51,7 +48,7 @@ const StatusBadge = React.memo(function StatusBadge({
 
   const { labelBorder, labelBg, svgColor } = React.useMemo(
     () => getCheckboxStyles(color),
-    [getCheckboxStyles, color]
+    [color]
   );
 
   const labelClasses = `inline-flex items-center ${labelBg} p-1 pl-2.5 pr-3 border rounded-[20px] border-transparent`;
