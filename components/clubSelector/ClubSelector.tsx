@@ -14,7 +14,7 @@ type ClubSelectorProps = {
   defaultClub: string;
   clubs: string[];
 };
-export const ClubSelector = ({
+const ClubSelector = ({
   id,
   defaultClub,
   clubs,
@@ -56,3 +56,5 @@ export const ClubSelector = ({
     </div>
   );
 };
+
+export default ClubSelector
