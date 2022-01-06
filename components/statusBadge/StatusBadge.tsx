@@ -21,7 +21,7 @@ const StatusBadge = React.memo(function StatusBadge({
     color,
   } = React.useMemo(
     () => invoiceStatusUiData[status],
-    [status, invoiceStatusUiData]
+    [status]
   );
 
   let badgeText = statusName;
@@ -51,7 +51,7 @@ const StatusBadge = React.memo(function StatusBadge({
 
   const { labelBorder, labelBg, svgColor } = React.useMemo(
     () => getCheckboxStyles(color),
-    [getCheckboxStyles, color]
+    [color]
   );
 
   const labelClasses = `inline-flex items-center ${labelBg} p-1 pl-2.5 pr-3 border rounded-[20px] border-transparent`;

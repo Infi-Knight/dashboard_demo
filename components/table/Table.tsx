@@ -1,7 +1,7 @@
 import * as React from 'react';
 import matchSorter from 'match-sorter';
 
-import { Invoice, InvoiceStatus } from '@/types/index';
+import { Invoice } from '@/types/invoice';
 
 import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
