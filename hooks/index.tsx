@@ -1,1 +1,1 @@
-export { useClubsAndInvoices } from './useClubsAndInvoices';
+export { useClubs, useInvoicesForClub } from './useClubsAndInvoices';
