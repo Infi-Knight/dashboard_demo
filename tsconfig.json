@@ -3,9 +3,11 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/api/*": ["pages/api/*"],
       "@/icons/*": ["icons/*"],
       "@/config/*": ["config/*"],
       "@/types/*": ["types/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/utils/*": ["utils/*"]
     },
     "target": "es5",

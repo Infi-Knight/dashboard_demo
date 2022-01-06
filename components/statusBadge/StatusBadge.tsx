@@ -19,7 +19,10 @@ const StatusBadge = React.memo(function StatusBadge({
     statusName,
     icon: Icon,
     color,
-  } = React.useMemo(() => invoiceStatusUiData[status], [status]);
+  } = React.useMemo(
+    () => invoiceStatusUiData[status],
+    [status]
+  );
 
   let badgeText = statusName;
   if (status === InvoiceStatus.PartlyPaid) {

@@ -1,0 +1,46 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { v4 as uuidv4 } from 'uuid';
+import * as faker from 'faker';
+import { clubs } from './clubs';
+import { Invoice } from '../../types';
+import { invoiceStatuses } from '../../config';
+
+faker.setLocale('sv');
+faker.seed(123);
+
+const range = (len: number): Array<any> => {
+  const arr = [];
+  for (let i = 0; i < len; i++) {
+    arr.push(i);
+  }
+  return arr;
+};
+
+let clubToInvoices = new Map<string, Invoice[]>();
+for (const club of clubs) {
+  const invoice = range(100).map((_, index) => {
+    return {
+      invoiceNumber: index + 1,
+      id: uuidv4(),
+      customerName: faker.company.companyName(),
+      dueDate: new Date(),
+      invoiceDate: new Date(),
+      total: parseFloat(faker.commerce.price()),
+      remaining: parseFloat(faker.commerce.price()),
+      status:
+        invoiceStatuses[Math.floor(Math.random() * invoiceStatuses.length)],
+    };
+  });
+  clubToInvoices.set(club, invoice);
+}
+
+export type InvoiceResponseType = Invoice[];
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<InvoiceResponseType>
+) {
+  const { club } = req.query as { club: string };
+  const invoices = clubToInvoices.get(club) || [];
+
+  res.status(200).json(invoices);
+}

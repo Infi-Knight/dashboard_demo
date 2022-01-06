@@ -5,7 +5,6 @@ import {
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-  ComboboxOptionText,
 } from '@reach/combobox';
 import SearchIcon from '@/icons/search_icon.svg';
 

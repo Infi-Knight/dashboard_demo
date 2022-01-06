@@ -1,20 +1,29 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { ClubSelector } from '@/components/clubSelector';
-import { LinkButton } from '@/components/button';
+import ClubSelector from '@/components/clubSelector';
 import Filter from '@/components/filter';
 import Search from '@/components/search';
+import { LinkButton } from '@/components/button';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
-import { invoicesPanelBodyId } from './InvoicesPanelBody';
-import { filterTabId } from '@/components/filter/Filter';
 
-export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
+import { filterTabId } from '@/components/filter/Filter';
+import { invoicesPanelBodyId } from './InvoicesPanelBody';
+
+type InvoicesPanelHeaderProps = {
+  clubs: string[];
+  selectedClub: string;
+  setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
+};
+export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
+  clubs,
+  selectedClub,
+  setSelectedClub,
+}: InvoicesPanelHeaderProps) {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
 
   // TODO: clean up the code and fix any perf issues in this handler and associated useEffect down below
-
   const handlePhantomDivResize = React.useCallback(() => {
     // Filter tab is positioned absolutely. So when it opens we need to move the
     // invoice table by the same amount otherwise this tab will appear over the table.
@@ -85,11 +94,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}
         <div id="phantom-div-2" className="md:hidden"></div>
-        <ClubSelector
-          id="invoice"
-          clubs={['AFC Eskilstuna', 'AIK Atlas', 'Adolfsbergs IK']}
-          defaultClub="AFC Eskilstuna"
-        />
+        <ClubSelector setSelectedClub={setSelectedClub} id="invoice" clubs={clubs} defaultClub={selectedClub} />
       </div>
 
       <div className="order-3 md:order-4 lg:order-2">

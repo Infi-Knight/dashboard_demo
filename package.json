@@ -16,11 +16,14 @@
     "@reach/tabs": "^0.16.4",
     "@reach/visually-hidden": "^0.16.0",
     "@types/faker": "^5.5.9",
+    "@types/uuid": "^8.3.3",
     "faker": "^5.5.3",
     "match-sorter": "^6.3.1",
     "next": "12.0.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "swr": "^1.1.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.1.2",

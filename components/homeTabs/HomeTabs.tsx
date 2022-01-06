@@ -1,11 +1,7 @@
 import * as React from 'react';
-import Link from 'next/link';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
 
-import { LinkButton } from '@/components/button';
-import { InvoicesPanelHeader } from './InvoicesPanelHeader';
-import { InvoicesPanelBody } from './InvoicesPanelBody';
-
+import { InvoicesPanel } from './InvoicesPanel';
 // TODO: https://css-tricks.com/bold-on-hover-without-the-layout-shift/
 // fix the shift due to font weight change on tab change
 // TODO: fix margins on > 1280px
@@ -31,8 +27,7 @@ export const HomeTabs = (): JSX.Element => {
 
             <TabPanels>
               <TabPanel>
-                <InvoicesPanelHeader />
-                <InvoicesPanelBody />
+                <InvoicesPanel />
               </TabPanel>
 
               <TabPanel>Coming soon...</TabPanel>
