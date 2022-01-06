@@ -48,7 +48,7 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
                   Due date
                 </span>
                 <span className="text-sm text-gray-600">
-                  {getFormattedDate(dueDate)}
+                  {getFormattedDate(new Date(dueDate))}
                 </span>
               </div>
             </div>
@@ -70,7 +70,7 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
                   Invoice date
                 </span>
                 <span className="text-sm text-gray-600">
-                  {getFormattedDate(invoiceDate)}
+                  {getFormattedDate(new Date(invoiceDate))}
                 </span>
               </div>
               <div>

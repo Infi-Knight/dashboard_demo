@@ -45,8 +45,12 @@ export const TableBody = React.memo(function TableBodyUI({
                   </span>
                   {customerName}
                 </span>
-                <span role="gridcell">{getFormattedDate(invoiceDate)}</span>
-                <span role="gridcell">{getFormattedDate(dueDate)}</span>
+                <span role="gridcell">
+                  {getFormattedDate(new Date(invoiceDate))}
+                </span>
+                <span role="gridcell">
+                  {getFormattedDate(new Date(dueDate))}
+                </span>
                 <span role="gridcell">{getFormattedCurrency(total)}</span>
                 <span role="gridcell">
                   <StatusBadge status={status} />

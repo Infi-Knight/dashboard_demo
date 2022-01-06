@@ -2,6 +2,8 @@ import * as React from 'react';
 import Link from 'next/link';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
 
+import { useClubsAndInvoices } from 'hooks';
+import { Invoice } from '@/types/index';
 import { ClubSelector } from '@/components/clubSelector';
 import Search from '@/components/search';
 import Filter from '@/components/filter';
@@ -37,8 +39,7 @@ export const HomeTabs = (): JSX.Element => {
 
             <TabPanels>
               <TabPanel>
-                <InvoicesPanelHeader />
-                <InvoicesPanelBody />
+                <InvoicesPanel />
               </TabPanel>
 
               <TabPanel>Coming soon...</TabPanel>
@@ -50,7 +51,54 @@ export const HomeTabs = (): JSX.Element => {
   );
 };
 
-const InvoicesPanelBody = React.memo(function InvoicesPanelBody() {
+const InvoicesPanel = React.memo(function InvoicesPanel() {
+  const { clubsAndInvoices, isError } = useClubsAndInvoices();
+  const [clubs, setClubs] = React.useState<string[]>([]);
+  const [selectedClub, setSelectedClub] = React.useState('');
+  const [invoices, setInvoices] = React.useState<Invoice[]>([]);
+
+  React.useEffect(() => {
+    if (clubsAndInvoices) {
+      setClubs(clubsAndInvoices.map(({ club }) => club));
+    }
+  }, [clubsAndInvoices]);
+
+  React.useEffect(() => {
+    if (clubs) {
+      setSelectedClub(clubs[0]);
+    }
+  }, [clubs]);
+
+  React.useEffect(() => {
+    if (clubsAndInvoices) {
+      const temp = clubsAndInvoices.find((item) => item.club === selectedClub);
+      if (temp) {
+        setInvoices(temp.invoices);
+      }
+    }
+  }, [selectedClub]);
+
+  if (isError) {
+    return <p>failed to load...</p>;
+  }
+
+  if (clubs && invoices && selectedClub !== '') {
+    return (
+      <>
+        <InvoicesPanelHeader clubs={clubs} defaultClub={selectedClub} />
+        <InvoicesPanelBody invoices={invoices} />
+      </>
+    );
+  }
+  return <p>loading...</p>;
+});
+
+type InvoicesPanelBodyProps = {
+  invoices: Invoice[];
+};
+const InvoicesPanelBody = React.memo(function InvoicesPanelBody({
+  invoices,
+}: InvoicesPanelBodyProps) {
   return (
     <>
       {/* this div makes space for filter tab when it is opened */}
@@ -60,13 +108,20 @@ const InvoicesPanelBody = React.memo(function InvoicesPanelBody() {
         id={invoicesPanelBodyId}
         className="mx-auto mt-[6px] border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl"
       >
-        <Table />
+        <Table invoices={invoices} />
       </div>
     </>
   );
 });
 
-const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
+type InvoicesPanelHeaderProps = {
+  clubs: string[];
+  defaultClub: string;
+};
+const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
+  clubs,
+  defaultClub,
+}: InvoicesPanelHeaderProps) {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
 
   // TODO: clean up the code and fix any perf issues in this handler and associated useEffect down below
@@ -134,11 +189,7 @@ const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}
         <div id="phantom-div-2" className="md:hidden"></div>
-        <ClubSelector
-          id="invoice"
-          clubs={['AFC Eskilstuna', 'AIK Atlas', 'Adolfsbergs IK']}
-          defaultClub="AFC Eskilstuna"
-        />
+        <ClubSelector id="invoice" clubs={clubs} defaultClub={defaultClub} />
       </div>
 
       <div className="order-3 md:order-4 lg:order-2">
