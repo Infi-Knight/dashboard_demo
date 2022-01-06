@@ -52,7 +52,7 @@ export const HomeTabs = (): JSX.Element => {
 };
 
 const InvoicesPanel = React.memo(function InvoicesPanel() {
-  const { clubsAndInvoices, isError } = useClubsAndInvoices();
+  const { clubsAndInvoices, isError, isLoading } = useClubsAndInvoices();
   const [clubs, setClubs] = React.useState<string[]>([]);
   const [selectedClub, setSelectedClub] = React.useState('');
   const [invoices, setInvoices] = React.useState<Invoice[]>([]);
@@ -82,6 +82,10 @@ const InvoicesPanel = React.memo(function InvoicesPanel() {
     return <p>failed to load...</p>;
   }
 
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
+
   if (clubs && invoices && selectedClub !== '') {
     return (
       <>
@@ -90,7 +94,8 @@ const InvoicesPanel = React.memo(function InvoicesPanel() {
       </>
     );
   }
-  return <p>loading...</p>;
+
+  return <p>this should not be possible</p>;
 });
 
 type InvoicesPanelBodyProps = {
