@@ -6,7 +6,7 @@ import {
   CustomCheckboxInputProps,
 } from '@reach/checkbox';
 
-import { SVGIcon, UiColor } from '@/types/index';
+import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
 import { getCheckboxStyles } from '@/components/filter/utils';
 
 // InvoiceFilterCheckbox does not require a children prop
@@ -21,6 +21,9 @@ export interface InvoiceFilterCheckboxProps
   statusName: string;
   Icon: SVGIcon;
   color: UiColor;
+  status: InvoiceStatus,
+  filters: InvoiceStatus[],
+  setFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
 }
 export default function InvoiceFilterCheckbox({
   Icon,
@@ -29,10 +32,20 @@ export default function InvoiceFilterCheckbox({
   checked,
   name,
   value,
+  filters,
+  status,
+  setFilters
 }: InvoiceFilterCheckboxProps): JSX.Element {
   const [checkedState, setChecked] = React.useState(checked || false);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (filters.includes(status)) {
+      const newFilters = filters.filter(item => item !== status)
+      setFilters(newFilters)
+    } else {
+      const newFilters = [...filters, status]
+      setFilters(newFilters)
+    }
     setChecked(e.target.checked);
   };
 

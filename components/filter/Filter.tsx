@@ -69,13 +69,11 @@ export const invoiceStatusUiData: {
 export const filterTabId = 'invoice-filter-tab';
 export type FilterProps = {
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
 };
-const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
+const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
-  const [filters, setFilters] = React.useState<InvoiceStatus[]>([
-    InvoiceStatus.Canceled,
-    InvoiceStatus.Overpaid,
-  ]);
+  const [filters, setFilters] = React.useState<InvoiceStatus[]>([]);
 
   React.useEffect(() => {
     setIsFilterTabOpen(isOpen);
@@ -91,7 +89,14 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
 
   const handleFiltersSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setAppliedFilters(filters)
+    setOpen(false)
   };
+
+  const handleFiltersReset = (e) => {
+    setFilters([])
+    setAppliedFilters([])
+  }
 
   return (
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
@@ -123,6 +128,7 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                   Icon={DeleteIcon}
                   className="text-gray-600"
                   variant="secondary"
+                  onClick={handleFiltersReset}
                 >
                   Clear filters
                 </Button>
@@ -142,10 +148,14 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
                     <InvoiceFilterCheckBox
                       key={statusName}
                       value={status}
+                      status={status}
                       Icon={Icon}
                       color={color}
                       statusName={statusName}
+                      filters={filters}
+                      setFilters={setFilters}
                       name="filters"
+                      checked={filters.includes(status)}
                     />
                   );
                 })}
