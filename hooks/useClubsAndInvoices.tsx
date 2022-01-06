@@ -1,15 +1,15 @@
 import * as React from 'react';
-import useSWR, { Key, Fetcher } from 'swr';
-import { InvoiceResponseType } from '@/api/invoices';
+import useSWR from 'swr';
 
-const fetcher = (url: string): Promise<InvoiceResponseType> =>
-  fetch(url).then((res) => res.json());
+async function fetcher(url: string) {
+  const res = await fetch(url);
+  return await res.json();
+}
 
-export function useClubsAndInvoices() {
-  const { data, error } = useSWR('/api/invoices', fetcher);
-  return {
-    clubsAndInvoices: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
+export function useClubs() {
+  return useSWR('/api/clubs', fetcher);
+}
+
+export function useInvoicesForClub(club: string) {
+  return useSWR(() => club !== '' ? `/api/invoices?club=${club}` : null, fetcher);
 }

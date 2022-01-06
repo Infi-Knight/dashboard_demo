@@ -13,11 +13,13 @@ import { invoicesPanelBodyId } from './InvoicesPanelBody';
 
 type InvoicesPanelHeaderProps = {
   clubs: string[];
-  defaultClub: string;
+  selectedClub: string;
+  setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
 };
 export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
   clubs,
-  defaultClub,
+  selectedClub,
+  setSelectedClub,
 }: InvoicesPanelHeaderProps) {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
 
@@ -80,7 +82,11 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
     handlePhantomDivResize();
     window.addEventListener('resize', handlePhantomDivResize);
     return () => window.removeEventListener('resize', handlePhantomDivResize);
-  }, [isFilterTabOpen, handlePhantomDivResize, handleInvoicesBodyOpacityOnFilterOpen]);
+  }, [
+    isFilterTabOpen,
+    handlePhantomDivResize,
+    handleInvoicesBodyOpacityOnFilterOpen,
+  ]);
 
   return (
     <div className="relative flex flex-wrap items-end mx-4 mt-6 md:mx-6 lg:mx-12 gap-4">
@@ -88,7 +94,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}
         <div id="phantom-div-2" className="md:hidden"></div>
-        <ClubSelector id="invoice" clubs={clubs} defaultClub={defaultClub} />
+        <ClubSelector setSelectedClub={setSelectedClub} id="invoice" clubs={clubs} defaultClub={selectedClub} />
       </div>
 
       <div className="order-3 md:order-4 lg:order-2">

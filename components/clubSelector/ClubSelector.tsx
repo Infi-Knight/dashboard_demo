@@ -13,14 +13,21 @@ type ClubSelectorProps = {
   id: string;
   defaultClub: string;
   clubs: string[];
+  setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
 };
 const ClubSelector = ({
   id,
   defaultClub,
   clubs,
+  setSelectedClub,
 }: ClubSelectorProps): JSX.Element => {
   let [value, setValue] = React.useState(defaultClub);
   let labelId = `club-label--${id}`;
+
+  const handleClubChange = (value: string) => {
+    setValue(value)
+    setSelectedClub(value)
+  }
 
   return (
     <div className="grow">
@@ -28,7 +35,7 @@ const ClubSelector = ({
       <ListboxInput
         aria-labelledby={labelId}
         value={value}
-        onChange={(value) => setValue(value)}
+        onChange={handleClubChange}
         className="flex border-0 md:border-b md:border-gray-200 pb-1.5 text-gray-700"
       >
         <img className="mr-6" src="/images/afc_eskilstuna.svg" />
@@ -57,4 +64,4 @@ const ClubSelector = ({
   );
 };
 
-export default ClubSelector
+export default ClubSelector;

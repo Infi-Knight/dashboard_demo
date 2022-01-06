@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
 import * as faker from 'faker';
+import { clubs } from './clubs';
 import { Invoice } from '../../types';
 import { invoiceStatuses } from '../../config';
 
 faker.setLocale('sv');
 faker.seed(123);
 
-const clubs = ['AFC Eskilstuna', 'AIK Atlas', 'Adolfsbergs IK'];
 const range = (len: number): Array<any> => {
   const arr = [];
   for (let i = 0; i < len; i++) {
@@ -16,13 +16,9 @@ const range = (len: number): Array<any> => {
   return arr;
 };
 
-export type InvoiceResponseType = {
-  club: string;
-  invoices: Invoice[];
-}[];
-
-const resData: InvoiceResponseType = clubs.map((club) => {
-  let invoices: Invoice[] = range(100).map((_, index) => {
+let clubToInvoices = new Map<string, Invoice[]>();
+for (const club of clubs) {
+  const invoice = range(100).map((_, index) => {
     return {
       invoiceNumber: index + 1,
       id: uuidv4(),
@@ -35,16 +31,16 @@ const resData: InvoiceResponseType = clubs.map((club) => {
         invoiceStatuses[Math.floor(Math.random() * invoiceStatuses.length)],
     };
   });
+  clubToInvoices.set(club, invoice);
+}
 
-  return {
-    club,
-    invoices,
-  };
-});
-
+export type InvoiceResponseType = Invoice[];
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>
 ) {
-  res.status(200).json(resData);
+  const { club } = req.query as { club: string };
+  const invoices = clubToInvoices.get(club) || [];
+
+  res.status(200).json(invoices);
 }

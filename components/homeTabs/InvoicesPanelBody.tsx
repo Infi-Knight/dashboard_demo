@@ -1,14 +1,12 @@
-import * as React from 'react'
-import { Invoice } from '@/types/invoice';
+import * as React from 'react';
 import Table from '@/components/table';
+import { Invoice } from '@/types/invoice';
 
 type InvoicesPanelBodyProps = {
-  invoices: Invoice[];
+  invoices: Invoice[]
 };
 export const invoicesPanelBodyId = 'invoices-panel-body';
-export const InvoicesPanelBody = React.memo(function InvoicesPanelBody({
-  invoices,
-}: InvoicesPanelBodyProps) {
+export const InvoicesPanelBody = React.memo(function InvoicesPanelBody({invoices}: InvoicesPanelBodyProps) {
   return (
     <>
       {/* this div makes space for filter tab when it is opened */}
