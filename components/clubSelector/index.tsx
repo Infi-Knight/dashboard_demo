@@ -1,1 +1,1 @@
-export { ClubSelector } from './ClubSelector';
+export { default } from './ClubSelector';

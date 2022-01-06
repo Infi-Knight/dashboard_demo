@@ -38,7 +38,7 @@ export default function InvoiceFilterCheckbox({
 
   const { labelBorder, labelBg, svgColor } = React.useMemo(
     () => getCheckboxStyles(color),
-    [color, getCheckboxStyles]
+    [color]
   );
 
   const borderColor = checkedState ? labelBorder : 'border-transparent';

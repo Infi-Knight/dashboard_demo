@@ -1,4 +1,4 @@
-import { UiColor } from '@/types/index';
+import { UiColor } from '@/types/ui';
 // https://tailwindcss.com/docs/content-configuration#class-detection-in-depth
 export function getCheckboxStyles(color: UiColor): {
   labelBorder: string;
