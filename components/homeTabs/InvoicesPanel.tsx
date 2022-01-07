@@ -1,49 +1,40 @@
 import * as React from 'react';
+import { useAtom } from 'jotai';
+
 import { InvoicesPanelHeader } from './InvoicesPanelHeader';
 import { InvoicesPanelBody } from './InvoicesPanelBody';
 import { useClubs, useInvoicesForClub } from '@/hooks/useClubsAndInvoices';
-import { Invoice, InvoiceStatus } from '@/types/invoice';
 
-export const InvoicesPanel = React.memo(function InvoicesPanel() {
-  const [appliedFilters, setAppliedFilters] = React.useState<InvoiceStatus[]>(
-    []
-  );
+import {
+  clubsAtom,
+  invoicesAtom,
+  selectedClubAtom,
+} from '@/store/store';
+
+export const InvoicesPanel = () => {
+  const [clubs, setClubs] = useAtom(clubsAtom);
+  const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
+  const [invoices, setInvoices] = useAtom(invoicesAtom);
+
   const { data: clubsData } = useClubs();
-  const [selectedClub, setSelectedClub] = React.useState('');
-
   React.useEffect(() => {
     if (clubsData) {
-      setSelectedClub(clubsData[0]);
+      setClubs(clubsData);
+      setSelectedClub(clubs[0]);
     }
-  }, [clubsData]);
+  }, [clubs, clubsData, setClubs, setSelectedClub]);
 
   const { data: invoicesData } = useInvoicesForClub(selectedClub);
-  const [invoices, setInvoices] = React.useState<Invoice[]>(invoicesData);
   React.useEffect(() => {
-    setInvoices(invoicesData);
-  }, [invoicesData]);
-
-  React.useEffect(() => {
-    if (appliedFilters.length > 0) {
-      const newInvoices = invoicesData.filter((invoice: Invoice) =>
-        appliedFilters.includes(invoice.status)
-      );
-      setInvoices(newInvoices);
-    } else setInvoices(invoicesData)
-  }, [appliedFilters, invoicesData]);
+    if (invoicesData) {
+      setInvoices(invoicesData);
+    }
+  }, [invoicesData, setInvoices]);
 
   return (
     <>
-      {clubsData && selectedClub !== '' && (
-        <InvoicesPanelHeader
-          clubs={clubsData}
-          appliedFilters={appliedFilters}
-          setAppliedFilters={setAppliedFilters}
-          selectedClub={selectedClub}
-          setSelectedClub={setSelectedClub}
-        />
-      )}
-      {invoices && <InvoicesPanelBody invoices={invoices} />}
+      {selectedClub && <InvoicesPanelHeader />}
+      {invoices && <InvoicesPanelBody />}
     </>
   );
-});
+};

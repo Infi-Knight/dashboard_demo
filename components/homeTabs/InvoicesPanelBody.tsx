@@ -1,12 +1,14 @@
 import * as React from 'react';
-import Table from '@/components/table';
-import { Invoice } from '@/types/invoice';
+import { useAtom } from 'jotai';
 
-type InvoicesPanelBodyProps = {
-  invoices: Invoice[]
-};
+import Table from '@/components/table';
+
+import { filteredInvoicesAtom } from 'store/store';
+
 export const invoicesPanelBodyId = 'invoices-panel-body';
-export const InvoicesPanelBody = React.memo(function InvoicesPanelBody({invoices}: InvoicesPanelBodyProps) {
+export const InvoicesPanelBody = () => {
+  const [filteredInvoices] = useAtom(filteredInvoicesAtom);
+
   return (
     <>
       {/* this div makes space for filter tab when it is opened */}
@@ -16,8 +18,8 @@ export const InvoicesPanelBody = React.memo(function InvoicesPanelBody({invoices
         id={invoicesPanelBodyId}
         className="mx-auto mt-[6px] border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl"
       >
-        <Table invoices={invoices} />
+        <Table invoices={filteredInvoices} />
       </div>
     </>
   );
-});
+};

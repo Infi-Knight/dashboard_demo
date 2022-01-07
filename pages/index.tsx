@@ -5,9 +5,9 @@ import { HomeTabs } from '@/components/homeTabs';
 
 const Home: NextPage = () => {
   return (
-    <main className="pt-20 md:pt-10 lg:pt-5 font-ibm-plex-sans">
-      <HomeTabs />
-    </main>
+      <main className="pt-20 md:pt-10 lg:pt-5 font-ibm-plex-sans">
+        <HomeTabs />
+      </main>
   );
 };
 

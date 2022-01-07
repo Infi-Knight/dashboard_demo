@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useAtom } from 'jotai';
 import {
   Disclosure,
   DisclosureButton,
@@ -66,18 +67,23 @@ export const invoiceStatusUiData: {
     color: UiColor.RED,
   },
 };
+
+import {
+  appliedFiltersAtom,
+  clubsAtom,
+  invoicesAtom,
+  selectedClubAtom,
+} from '@/store/store';
+
 export const filterTabId = 'invoice-filter-tab';
 export type FilterProps = {
-  appliedFilters: InvoiceStatus[],
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>;
 };
 const Filter = ({
   setIsFilterTabOpen,
-  setAppliedFilters,
-  appliedFilters
 }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
+  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom)
   const [filters, setFilters] = React.useState<InvoiceStatus[]>([]);
 
   React.useEffect(() => {

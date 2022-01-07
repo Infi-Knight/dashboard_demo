@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from 'react';
+import { useAtom } from 'jotai';
 import VisuallyHidden from '@reach/visually-hidden';
 import {
-  Listbox,
   ListboxInput,
   ListboxButton,
   ListboxPopover,
@@ -9,38 +10,35 @@ import {
   ListboxOption,
 } from '@reach/listbox';
 
+import { clubsAtom, selectedClubAtom } from '@/store/store';
+
 type ClubSelectorProps = {
   id: string;
-  defaultClub: string;
-  clubs: string[];
-  setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
 };
-const ClubSelector = ({
-  id,
-  defaultClub,
-  clubs,
-  setSelectedClub,
-}: ClubSelectorProps): JSX.Element => {
-  let [value, setValue] = React.useState(defaultClub);
+const ClubSelector = ({ id }: ClubSelectorProps) => {
+  const [clubs] = useAtom(clubsAtom);
+  const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
+
   let labelId = `club-label--${id}`;
 
   const handleClubChange = (value: string) => {
-    setValue(value)
-    setSelectedClub(value)
-  }
+    setSelectedClub(value);
+  };
 
   return (
     <div className="grow">
       <VisuallyHidden id={labelId}>Choose a club</VisuallyHidden>
       <ListboxInput
         aria-labelledby={labelId}
-        value={value}
+        value={selectedClub}
         onChange={handleClubChange}
         className="flex border-0 md:border-b md:border-gray-200 pb-1.5 text-gray-700"
       >
-        <img className="mr-6" src="/images/afc_eskilstuna.svg" />
+        <img className="mr-6" src="/images/afc_eskilstuna.svg" alt="" />
         <ListboxButton
-          arrow={<img className="ml-2" src="/images/dropdown_icon.svg" />}
+          arrow={
+            <img className="ml-2" src="/images/dropdown_icon.svg" alt="" />
+          }
           className="border-none"
         />
         <ListboxPopover>
@@ -52,7 +50,11 @@ const ClubSelector = ({
                   value={club}
                   className="flex w-48 p-1"
                 >
-                  <img className="ml-0 mr-2" src="/images/afc_eskilstuna.svg" />
+                  <img
+                    className="ml-0 mr-2"
+                    src="/images/afc_eskilstuna.svg"
+                    alt=""
+                  />
                   <span className="font-medium font-lg">{club}</span>
                 </ListboxOption>
               );

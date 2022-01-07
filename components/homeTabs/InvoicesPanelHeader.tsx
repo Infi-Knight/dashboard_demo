@@ -10,22 +10,8 @@ import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
 
 import { filterTabId } from '@/components/filter/Filter';
 import { invoicesPanelBodyId } from './InvoicesPanelBody';
-import { InvoiceStatus } from '@/types/invoice';
 
-type InvoicesPanelHeaderProps = {
-  clubs: string[];
-  selectedClub: string;
-  appliedFilters: InvoiceStatus[],
-  setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
-  setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
-};
-export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
-  clubs,
-  selectedClub,
-  setSelectedClub,
-  setAppliedFilters,
-  appliedFilters
-}: InvoicesPanelHeaderProps) {
+export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
 
   // TODO: clean up the code and fix any perf issues in this handler and associated useEffect down below
@@ -99,11 +85,11 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}
         <div id="phantom-div-2" className="md:hidden"></div>
-        <ClubSelector setSelectedClub={setSelectedClub} id="invoice" clubs={clubs} defaultClub={selectedClub} />
+        <ClubSelector id="invoice" />
       </div>
 
       <div className="order-3 md:order-4 lg:order-2">
-        <Filter appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters} setIsFilterTabOpen={setIsFilterTabOpen} />
+        <Filter setIsFilterTabOpen={setIsFilterTabOpen} />
       </div>
 
       <div className="order-2 grow md:min-w-[351px] md:grow-0 md:order-3">
