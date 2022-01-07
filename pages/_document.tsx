@@ -5,10 +5,16 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link href="https://fonts.googleapis.com" />
-          <link href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
-          <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+          />
+          <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+          />
         </Head>
         <body className="bg-body">
           <Main />
