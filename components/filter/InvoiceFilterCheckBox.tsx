@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useAtom } from 'jotai';
 import {
   CustomCheckboxContainer,
   CustomCheckboxContainerProps,
@@ -6,54 +7,76 @@ import {
   CustomCheckboxInputProps,
 } from '@reach/checkbox';
 
+import { selectedFiltersAtom } from '@/store/store';
+
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
 import { getCheckboxStyles } from '@/components/filter/utils';
+import { invoiceStatuses } from '@/config/index';
+import { invoiceStatusUiData } from './Filter';
 
+export function InvoiceFilterCheckBoxes() {
+  return (
+    <>
+      {invoiceStatuses.map((status) => {
+        const { statusName, icon: Icon, color } = invoiceStatusUiData[status];
+
+        return (
+          // for some reasons the InvoiceFilterCheckBox is not reacting properly
+          // to state changes so I am forcing it to rerender on filters reset by
+          // providing a checked status dependent key
+          <InvoiceFilterCheckBox
+            key={statusName}
+            value={status}
+            status={status}
+            Icon={Icon}
+            color={color}
+            statusName={statusName}
+            name="filters"
+          />
+        );
+      })}
+    </>
+  );
+}
 // InvoiceFilterCheckbox does not require a children prop
 type FilterCheckBoxBaseReachUiProps = Omit<
   CustomCheckboxContainerProps,
   'children'
 > &
   CustomCheckboxInputProps;
-
 export interface InvoiceFilterCheckboxProps
   extends FilterCheckBoxBaseReachUiProps {
   statusName: string;
   Icon: SVGIcon;
   color: UiColor;
   status: InvoiceStatus;
-  filters: InvoiceStatus[];
-  setFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>;
 }
-export default function InvoiceFilterCheckbox({
+
+function InvoiceFilterCheckBox({
   Icon,
   color,
   statusName,
-  checked,
   name,
   value,
-  filters,
   status,
-  setFilters,
-}: InvoiceFilterCheckboxProps): JSX.Element {
-  const [checkedState, setChecked] = React.useState(checked || false);
+}: InvoiceFilterCheckboxProps) {
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+  const [checkedState, setChecked] = React.useState(
+    selectedFilters.includes(status)
+  );
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
-    if (filters.includes(status)) {
-      const newFilters = filters.filter((item) => item !== status);
-      setFilters(newFilters);
+    if (selectedFilters.includes(status)) {
+      const newFilters = selectedFilters.filter((item) => item !== status);
+      setSelectedFilters(newFilters);
     } else {
-      const newFilters = [...filters, status];
-      setFilters(newFilters);
+      const newFilters = [...selectedFilters, status];
+      setSelectedFilters(newFilters);
     }
   };
 
-  const { labelBorder, labelBg, svgColor } = React.useMemo(
-    () => getCheckboxStyles(color),
-    [color]
-  );
-
+  const { labelBorder, labelBg, svgColor } = getCheckboxStyles(color)
   const borderColor = checkedState ? labelBorder : 'border-transparent';
   const bgColor = checkedState ? labelBg : 'bg-gray-100';
   const iconStyles = checkedState

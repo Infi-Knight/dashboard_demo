@@ -19,9 +19,8 @@ import DoneIcon from '@/icons/done_icon.svg';
 import DeleteIcon from '@/icons/delete_icon.svg';
 
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
-import  InvoiceFilterCheckBox  from '@/components/filter/InvoiceFilterCheckBox';
+import  { InvoiceFilterCheckBoxes }  from '@/components/filter/InvoiceFilterCheckBox';
 import { Button } from '@/components/button';
-import { invoiceStatuses } from '@/config/index';
 
 type StatusUiDataType = {
   statusName: string;
@@ -70,9 +69,7 @@ export const invoiceStatusUiData: {
 
 import {
   appliedFiltersAtom,
-  clubsAtom,
-  invoicesAtom,
-  selectedClubAtom,
+  selectedFiltersAtom
 } from '@/store/store';
 
 export const filterTabId = 'invoice-filter-tab';
@@ -84,7 +81,7 @@ const Filter = ({
 }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
   const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom)
-  const [filters, setFilters] = React.useState<InvoiceStatus[]>([]);
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom)
 
   React.useEffect(() => {
     setIsFilterTabOpen(isOpen);
@@ -100,17 +97,17 @@ const Filter = ({
 
   const handleFiltersSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     setOpen(false);
-    setAppliedFilters(filters);
+    setAppliedFilters(selectedFilters);
   };
 
   const handleFiltersReset = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setFilters([]);
+    setSelectedFilters([]);
     setAppliedFilters([]);
     setOpen(false);
   };
 
   const handleFiltersCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setFilters(appliedFilters);
+    setSelectedFilters(appliedFilters);
     setOpen(false);
   };
 
@@ -118,9 +115,9 @@ const Filter = ({
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
       <div>
         <div className="relative">
-          {filters.length > 0 && !isOpen && (
+          {selectedFilters.length > 0 && !isOpen && (
             <span className="flex font-bold justify-center items-center text-[10px] absolute h-3.5 w-3.5 bg-primary-blue text-white rounded-full top-[-7px] right-[-7px]">
-              {filters.length}
+              {selectedFilters.length}
             </span>
           )}
 
@@ -150,31 +147,7 @@ const Filter = ({
             <div className="px-4 pt-5 pb-6 md:px-6">
               <p className="font-medium text-gray-700">Invoice status</p>
               <div className="flex flex-wrap items-center mt-4 gap-2">
-                {invoiceStatuses.map((status) => {
-                  const {
-                    statusName,
-                    icon: Icon,
-                    color,
-                  } = invoiceStatusUiData[status];
-
-                  return (
-                    // for some reasons the InvoiceFilterCheckBox is not reacting properly
-                    // to state changes so I am forcing it to rerender on filters reset by
-                    // providing a checked status dependent key
-                    <InvoiceFilterCheckBox
-                      key={statusName+`${filters.includes(status)}`}
-                      value={status}
-                      status={status}
-                      Icon={Icon}
-                      color={color}
-                      statusName={statusName}
-                      filters={filters}
-                      setFilters={setFilters}
-                      name="filters"
-                      checked={filters.includes(status)}
-                    />
-                  );
-                })}
+                <InvoiceFilterCheckBoxes />
               </div>
             </div>
             <div className="flex items-center justify-between px-4 py-3 md:px-6">
