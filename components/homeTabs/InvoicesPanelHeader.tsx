@@ -15,6 +15,7 @@ import { InvoiceStatus } from '@/types/invoice';
 type InvoicesPanelHeaderProps = {
   clubs: string[];
   selectedClub: string;
+  appliedFilters: InvoiceStatus[],
   setSelectedClub: React.Dispatch<React.SetStateAction<string>>;
   setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
 };
@@ -22,7 +23,8 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
   clubs,
   selectedClub,
   setSelectedClub,
-  setAppliedFilters
+  setAppliedFilters,
+  appliedFilters
 }: InvoicesPanelHeaderProps) {
   const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
 
@@ -101,7 +103,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader({
       </div>
 
       <div className="order-3 md:order-4 lg:order-2">
-        <Filter setAppliedFilters={setAppliedFilters} setIsFilterTabOpen={setIsFilterTabOpen} />
+        <Filter appliedFilters={appliedFilters} setAppliedFilters={setAppliedFilters} setIsFilterTabOpen={setIsFilterTabOpen} />
       </div>
 
       <div className="order-2 grow md:min-w-[351px] md:grow-0 md:order-3">

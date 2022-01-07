@@ -5,7 +5,9 @@ import { useClubs, useInvoicesForClub } from '@/hooks/useClubsAndInvoices';
 import { Invoice, InvoiceStatus } from '@/types/invoice';
 
 export const InvoicesPanel = React.memo(function InvoicesPanel() {
-  const [appliedFilters, setAppliedFilters] = React.useState<InvoiceStatus[]>([])
+  const [appliedFilters, setAppliedFilters] = React.useState<InvoiceStatus[]>(
+    []
+  );
   const { data: clubsData } = useClubs();
   const [selectedClub, setSelectedClub] = React.useState('');
 
@@ -21,19 +23,21 @@ export const InvoicesPanel = React.memo(function InvoicesPanel() {
     setInvoices(invoicesData);
   }, [invoicesData]);
 
-  React.useEffect(()=> {
-    if (appliedFilters.length !== 0) {
-      const newInvoices = invoices.filter(invoice => appliedFilters.includes(invoice.status))
-      setInvoices(newInvoices)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appliedFilters])
+  React.useEffect(() => {
+    if (appliedFilters.length > 0) {
+      const newInvoices = invoicesData.filter((invoice: Invoice) =>
+        appliedFilters.includes(invoice.status)
+      );
+      setInvoices(newInvoices);
+    } else setInvoices(invoicesData)
+  }, [appliedFilters, invoicesData]);
 
   return (
     <>
       {clubsData && selectedClub !== '' && (
         <InvoicesPanelHeader
           clubs={clubsData}
+          appliedFilters={appliedFilters}
           setAppliedFilters={setAppliedFilters}
           selectedClub={selectedClub}
           setSelectedClub={setSelectedClub}

@@ -21,9 +21,9 @@ export interface InvoiceFilterCheckboxProps
   statusName: string;
   Icon: SVGIcon;
   color: UiColor;
-  status: InvoiceStatus,
-  filters: InvoiceStatus[],
-  setFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
+  status: InvoiceStatus;
+  filters: InvoiceStatus[];
+  setFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>;
 }
 export default function InvoiceFilterCheckbox({
   Icon,
@@ -34,19 +34,19 @@ export default function InvoiceFilterCheckbox({
   value,
   filters,
   status,
-  setFilters
+  setFilters,
 }: InvoiceFilterCheckboxProps): JSX.Element {
   const [checkedState, setChecked] = React.useState(checked || false);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (filters.includes(status)) {
-      const newFilters = filters.filter(item => item !== status)
-      setFilters(newFilters)
-    } else {
-      const newFilters = [...filters, status]
-      setFilters(newFilters)
-    }
     setChecked(e.target.checked);
+    if (filters.includes(status)) {
+      const newFilters = filters.filter((item) => item !== status);
+      setFilters(newFilters);
+    } else {
+      const newFilters = [...filters, status];
+      setFilters(newFilters);
+    }
   };
 
   const { labelBorder, labelBg, svgColor } = React.useMemo(

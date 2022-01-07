@@ -18,7 +18,7 @@ import DoneIcon from '@/icons/done_icon.svg';
 import DeleteIcon from '@/icons/delete_icon.svg';
 
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
-import InvoiceFilterCheckBox from '@/components/filter/InvoiceFilterCheckBox';
+import  InvoiceFilterCheckBox  from '@/components/filter/InvoiceFilterCheckBox';
 import { Button } from '@/components/button';
 import { invoiceStatuses } from '@/config/index';
 
@@ -68,10 +68,15 @@ export const invoiceStatusUiData: {
 };
 export const filterTabId = 'invoice-filter-tab';
 export type FilterProps = {
+  appliedFilters: InvoiceStatus[],
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>
+  setAppliedFilters: React.Dispatch<React.SetStateAction<InvoiceStatus[]>>;
 };
-const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Element => {
+const Filter = ({
+  setIsFilterTabOpen,
+  setAppliedFilters,
+  appliedFilters
+}: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
   const [filters, setFilters] = React.useState<InvoiceStatus[]>([]);
 
@@ -87,16 +92,21 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
     ? 'border-primary-blue bg-indigo-100'
     : 'bg-white border-gray-200';
 
-  const handleFiltersSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setAppliedFilters(filters)
-    setOpen(false)
+  const handleFiltersSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setOpen(false);
+    setAppliedFilters(filters);
   };
 
-  const handleFiltersReset = (e) => {
-    setFilters([])
-    setAppliedFilters([])
-  }
+  const handleFiltersReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setFilters([]);
+    setAppliedFilters([]);
+    setOpen(false);
+  };
+
+  const handleFiltersCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setFilters(appliedFilters);
+    setOpen(false);
+  };
 
   return (
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
@@ -115,10 +125,7 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
           </DisclosureButton>
         </div>
         <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded top-[130px] md:top-[140px] lg:top-[74px]">
-          <form
-            onSubmit={handleFiltersSubmit}
-            className="grid grid-cols-1 divide-y"
-          >
+          <div className="grid grid-cols-1 divide-y">
             <div className="flex items-center justify-between px-4 pt-3 pb-3 md:pt-4 md:px-6 ">
               <span className="text-lg font-medium text-gray-700">
                 Filter results
@@ -136,7 +143,7 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
             </div>
             <div className="px-4 pt-5 pb-6 md:px-6">
               <p className="font-medium text-gray-700">Invoice status</p>
-              <fieldset className="flex flex-wrap items-center mt-4 gap-2">
+              <div className="flex flex-wrap items-center mt-4 gap-2">
                 {invoiceStatuses.map((status) => {
                   const {
                     statusName,
@@ -145,8 +152,11 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
                   } = invoiceStatusUiData[status];
 
                   return (
+                    // for some reasons the InvoiceFilterCheckBox is not reacting properly
+                    // to state changes so I am forcing it to rerender on filters reset by
+                    // providing a checked status dependent key
                     <InvoiceFilterCheckBox
-                      key={statusName}
+                      key={statusName+`${filters.includes(status)}`}
                       value={status}
                       status={status}
                       Icon={Icon}
@@ -159,7 +169,7 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
                     />
                   );
                 })}
-              </fieldset>
+              </div>
             </div>
             <div className="flex items-center justify-between px-4 py-3 md:px-6">
               <div className="hidden md:block">
@@ -167,6 +177,7 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
                   Icon={DeleteIcon}
                   className="text-gray-600"
                   variant="secondary"
+                  onClick={handleFiltersReset}
                 >
                   Clear filters
                 </Button>
@@ -176,15 +187,20 @@ const Filter = ({ setIsFilterTabOpen, setAppliedFilters }: FilterProps): JSX.Ele
                   Icon={ClearIcon}
                   variant="secondary"
                   className="mr-6 text-red-700"
+                  onClick={handleFiltersCancel}
                 >
                   Cancel
                 </Button>
-                <Button Icon={DoneIcon} type="submit">
+                <Button
+                  onClick={handleFiltersSubmit}
+                  Icon={DoneIcon}
+                  type="submit"
+                >
                   Apply filters
                 </Button>
               </div>
             </div>
-          </form>
+          </div>
         </DisclosurePanel>
       </div>
     </Disclosure>
