@@ -1,3 +1,4 @@
+// vanilla formatters
 export function getFormattedDate(date: Date) {
   const dateFormatter = new Intl.DateTimeFormat('sv-SE', {
     dateStyle: 'short',

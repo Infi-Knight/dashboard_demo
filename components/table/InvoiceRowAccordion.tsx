@@ -5,9 +5,10 @@ import {
   AccordionButton,
   AccordionPanel,
 } from '@reach/accordion';
+import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 
 import { Invoice } from '@/types/index';
-import StatusBadge from '@/components/statusBadge';
+import StatusBadge, { getBadgeText } from '@/components/statusBadge';
 import { getFormattedDate, getFormattedCurrency } from '@/utils/index';
 import { LinkButton } from '@/components/button';
 
@@ -20,9 +21,11 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
   customerName,
   invoiceDate,
   total,
+  remaining,
   status,
   dueDate,
 }: Invoice) {
+  const intl = useIntl();
   const [isAccordionOpen, setIsAccordionOpen] = React.useState<boolean>(false);
   const handleAccordionToggle = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -32,6 +35,7 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
     ? 'bg-gray-50 md:bg-white'
     : 'border-b bg-white';
 
+  const badgeText = getBadgeText(intl, status, remaining);
   return (
     <Accordion
       collapsible
@@ -48,13 +52,13 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
                   Due date
                 </span>
                 <span className="text-sm text-gray-600">
-                  {getFormattedDate(new Date(dueDate))}
+                  <FormattedDate value={new Date(dueDate)} />
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-x-6">
               <span className="justify-self-center">
-                <StatusBadge status={status} />
+                <StatusBadge status={status} text={badgeText} />
               </span>
               <span className="justify-self-center">
                 {isAccordionOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
@@ -70,7 +74,7 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
                   Invoice date
                 </span>
                 <span className="text-sm text-gray-600">
-                  {getFormattedDate(new Date(invoiceDate))}
+                  <FormattedDate value={new Date(invoiceDate)} />
                 </span>
               </div>
               <div>
@@ -78,7 +82,11 @@ export const InvoiceRowAccordion = React.memo(function InvoiceRow({
                   Amount
                 </span>
                 <span className="text-sm text-gray-600">
-                  {getFormattedCurrency(total)}
+                  <FormattedNumber
+                    value={total}
+                    style="currency"
+                    currency="SEK"
+                  />
                 </span>
               </div>
             </div>

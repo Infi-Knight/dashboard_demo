@@ -1,1 +1,1 @@
-export { default } from './StatusBadge';
+export { default, getBadgeText } from './StatusBadge';

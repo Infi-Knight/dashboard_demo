@@ -4,7 +4,8 @@
 
 ## Flow
 
-- search is debounced with a 300ms delay and shows result in search as you type manner
+- current locale is obtained using `navigator.language`. In case no locale is set, 'sv-SE' is used
+- search is debounced with a 300ms delay and shows result in search as you type manner. Only customer name is used as a search key for now
 - if a different club is choosen from the menu, the filters will be reset
 - filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 
@@ -15,6 +16,7 @@
 - write tests
 - perf fixes
 - cleanup code
+- error handling and loading states
 
 ## libraries used
 
@@ -22,6 +24,7 @@
 - [SVGR](https://react-svgr.com/) for handling svg icons
 - [swr](https://swr.vercel.app/) for data fetching and server state
 - [jotai](https://jotai.org/) for client state management
+- [react-intl](https://formatjs.io/docs/react-intl) for localization
 
 ### Some problems I encountered and their fixes
 

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useAtom } from 'jotai';
+import { FormattedDate, FormattedNumber, useIntl } from 'react-intl';
 
 import { InvoiceStatus } from '@/types/index';
 import { LinkButton } from '@/components/button';
-import StatusBadge from '@/components/statusBadge';
+import StatusBadge, { getBadgeText } from '@/components/statusBadge';
 
 import ContactIcon from '@/icons/contact_icon.svg';
 import EditIcon from '@/icons/edit_icon.svg';
@@ -14,6 +15,7 @@ import { InvoiceRowAccordion } from './InvoiceRowAccordion';
 import { invoicesAtom } from '@/store/store';
 export const TableBody = React.memo(function TableBodyUI() {
   const [data] = useAtom(invoicesAtom);
+  const intl = useIntl();
   // TODO: fix responsiveness for the table on > 1280px screens. right now the width of each column
   // is hardcoded
   // One alternative is to use a html table based layout for desktop which will also preserve
@@ -31,7 +33,7 @@ export const TableBody = React.memo(function TableBodyUI() {
             remaining,
             status,
           }) => {
-            const badgeText = getBadgeText(status, remaining);
+            const badgeText = getBadgeText(intl, status, remaining);
             return (
               <div
                 role="row"
@@ -46,12 +48,18 @@ export const TableBody = React.memo(function TableBodyUI() {
                   {customerName}
                 </span>
                 <span role="gridcell">
-                  {getFormattedDate(new Date(invoiceDate))}
+                  <FormattedDate value={new Date(invoiceDate)} />
                 </span>
                 <span role="gridcell">
-                  {getFormattedDate(new Date(dueDate))}
+                  <FormattedDate value={new Date(dueDate)} />
                 </span>
-                <span role="gridcell">{getFormattedCurrency(total)}</span>
+                <span role="gridcell">
+                  <FormattedNumber
+                    value={total}
+                    style="currency"
+                    currency="SEK"
+                  />
+                </span>
                 <span role="gridcell">
                   <StatusBadge status={status} text={badgeText} />
                 </span>
@@ -90,19 +98,3 @@ export const TableBody = React.memo(function TableBodyUI() {
     </>
   );
 });
-
-function getBadgeText(
-  status: InvoiceStatus,
-  remaining: number
-): string | undefined {
-  let badgeText;
-  if (
-    status === InvoiceStatus.PartlyPaid ||
-    status === InvoiceStatus.Overpaid
-  ) {
-    badgeText = getFormattedCurrency(remaining);
-  } else if (status === InvoiceStatus.Paid) {
-    badgeText = 'Fully paid';
-  }
-  return badgeText;
-}

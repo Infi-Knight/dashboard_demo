@@ -9,12 +9,18 @@ import '@reach/accordion/styles.css';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Provider } from 'jotai';
+import { IntlProvider } from 'react-intl';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider>
-      <Component {...pageProps} />
-    </Provider>
+    <IntlProvider
+      locale={typeof window === 'undefined' ? 'en-US' : navigator.language}
+      defaultLocale={'sv-SE'}
+    >
+      <Provider>
+        <Component {...pageProps} />
+      </Provider>
+    </IntlProvider>
   );
 }
 
