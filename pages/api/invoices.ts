@@ -16,9 +16,10 @@ const range = (len: number): Array<any> => {
   return arr;
 };
 
+const MAX_INVOICES_PER_CLUB = 5;
 let clubToInvoices = new Map<string, Invoice[]>();
 for (const club of clubs) {
-  const invoice = range(100).map((_, index) => {
+  const invoice = range(MAX_INVOICES_PER_CLUB).map((_, index) => {
     const status =
       invoiceStatuses[Math.floor(Math.random() * invoiceStatuses.length)];
     const total = parseFloat(faker.commerce.price());
@@ -47,7 +48,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>
 ) {
-  const { club } = req.query as { club: string };
+  const { club, page } = req.query as { club: string; page: string };
+  console.log('club' + club);
+  console.log('page' + page);
   const invoices = clubToInvoices.get(club) || [];
 
   res.status(200).json(invoices);

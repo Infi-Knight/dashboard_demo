@@ -5,12 +5,14 @@ import { SVGIcon } from '@/types/index';
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   Icon?: SVGIcon;
   variant?: 'primary' | 'secondary';
+  iconClasses?: string;
 }
 
 export const Button = ({
   onClick,
   children,
   Icon,
+  iconClasses,
   variant = 'primary',
   className = '',
   ...restProps
@@ -27,7 +29,7 @@ export const Button = ({
       {...restProps}
     >
       {Icon && (
-        <span className="mr-3">
+        <span className={`mr-3 ${iconClasses}`}>
           <Icon />
         </span>
       )}
