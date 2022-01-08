@@ -52,3 +52,24 @@ const StatusBadge = React.memo(function StatusBadge({
 });
 
 export default StatusBadge;
+
+export function getBadgeText(
+  intl: any,
+  status: InvoiceStatus,
+  remaining: number
+): string | undefined {
+  let badgeText;
+  if (
+    status === InvoiceStatus.PartlyPaid ||
+    status === InvoiceStatus.Overpaid
+  ) {
+    badgeText = getFormattedCurrency(remaining);
+    badgeText = intl.formatNumber(remaining, {
+      style: 'currency',
+      currency: 'SEK',
+    });
+  } else if (status === InvoiceStatus.Paid) {
+    badgeText = 'Fully paid';
+  }
+  return badgeText;
+}

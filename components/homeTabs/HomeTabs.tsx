@@ -39,7 +39,7 @@ export const HomeTabs = (): JSX.Element => {
                 <Pagination />
               </TabPanel>
 
-              <TabPanel>Coming soon...</TabPanel>
+              <TabPanel></TabPanel>
             </TabPanels>
           </React.Fragment>
         );
