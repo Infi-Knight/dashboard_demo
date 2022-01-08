@@ -16,7 +16,8 @@ const range = (len: number): Array<any> => {
   return arr;
 };
 
-const MAX_INVOICES_PER_CLUB = 5;
+const MAX_INVOICES_PER_CLUB = 55;
+const LIMIT = 10;
 let clubToInvoices = new Map<string, Invoice[]>();
 for (const club of clubs) {
   const invoice = range(MAX_INVOICES_PER_CLUB).map((_, index) => {
@@ -43,15 +44,33 @@ for (const club of clubs) {
   clubToInvoices.set(club, invoice);
 }
 
-export type InvoiceResponseType = Invoice[];
+export type InvoiceResponseType = {
+  invoices: Invoice[];
+  paginationData: {
+    total: number;
+    currentPage: number;
+    perPageLimit: number;
+  };
+};
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>
 ) {
-  const { club, page } = req.query as { club: string; page: string };
-  console.log('club' + club);
-  console.log('page' + page);
+  let { club, page } = req.query as { club: string; page: string };
+  if (page === undefined) page = '1';
   const invoices = clubToInvoices.get(club) || [];
 
-  res.status(200).json(invoices);
+  const totalInvoicesCount = invoices.length;
+  const start = (parseInt(page) - 1) * LIMIT;
+
+  const currentPageInvoices = invoices.slice(start, start + LIMIT);
+
+  res.status(200).json({
+    invoices: currentPageInvoices,
+    paginationData: {
+      total: totalInvoicesCount,
+      currentPage: parseInt(page),
+      perPageLimit: LIMIT,
+    },
+  });
 }

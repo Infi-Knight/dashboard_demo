@@ -10,6 +10,10 @@ export function useClubs() {
   return useSWR('/api/clubs', fetcher);
 }
 
-export function useInvoicesForClub(club: string) {
-  return useSWR(() => club !== '' ? `/api/invoices?club=${club}` : null, fetcher);
+export function useInvoicesForClub(club: string, currentPage: number) {
+  return useSWR(
+    () =>
+      club !== '' ? `/api/invoices?club=${club}&page=${currentPage}` : null,
+    fetcher
+  );
 }
