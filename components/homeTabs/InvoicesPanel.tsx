@@ -13,12 +13,14 @@ import {
   selectedFiltersAtom,
   currentPageAtom,
   paginationDataAtom,
+  searchAtom,
 } from '@/store/store';
 
 export const InvoicesPanel = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [, setPaginationData] = useAtom(paginationDataAtom);
   const [clubs, setClubs] = useAtom(clubsAtom);
+  const [searchString, setSearchString] = useAtom(searchAtom);
   const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
   const [invoices, setInvoices] = useAtom(invoicesAtom);
   const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
@@ -35,7 +37,8 @@ export const InvoicesPanel = () => {
   const { data: invoicesData } = useInvoicesForClub(
     selectedClub,
     currentPage,
-    appliedFilters
+    appliedFilters,
+    searchString
   );
   React.useEffect(() => {
     if (invoicesData) {

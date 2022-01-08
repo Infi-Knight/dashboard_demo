@@ -4,6 +4,7 @@
 
 ## Flow
 
+- search is debounced with a 300ms delay and shows result in search as you type manner
 - if a different club is choosen from the menu, the filters will be reset
 - filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 

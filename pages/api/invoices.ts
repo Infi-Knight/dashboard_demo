@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { matchSorter } from 'match-sorter';
 import { v4 as uuidv4 } from 'uuid';
 import * as faker from 'faker';
 import { clubs } from './clubs';
@@ -57,21 +58,25 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>
 ) {
-  let { club, page, filters } = req.query as {
+  let { club, page, filters, searchString } = req.query as {
     club: string;
     page: string;
     filters: string[];
+    searchString: string;
   };
   let invoices = clubToInvoices.get(club) || [];
   if (filters.length > 0) {
-    invoices = invoices
-      .filter((invoice) => {
-        const invoiceStatus = invoice.status.toString();
-        return filters.includes(invoiceStatus);
-      })
-      .map((invoice, index) => ({ ...invoice, invoiceNumber: index + 1 }));
+    invoices = invoices.filter((invoice) => {
+      const invoiceStatus = invoice.status.toString();
+      return filters.includes(invoiceStatus);
+    });
   }
-
+  invoices = matchSorter(invoices, searchString, {
+    keys: ['customerName'],
+  }).map((invoice, index) => ({
+    ...invoice,
+    invoiceNumber: index + 1,
+  }));
   const totalInvoicesCount = invoices.length;
   const start = (parseInt(page) - 1) * LIMIT;
 

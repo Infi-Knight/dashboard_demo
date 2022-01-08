@@ -15,12 +15,13 @@ export function useClubs() {
 export function useInvoicesForClub(
   club: string,
   currentPage: number,
-  appliedFilters: InvoiceStatus[]
+  appliedFilters: InvoiceStatus[],
+  searchString: string
 ) {
   return useSWR(
     () =>
       club !== ''
-        ? `/api/invoices?club=${club}&page=${currentPage}&filters=${appliedFilters.toString()}`
+        ? `/api/invoices?club=${club}&page=${currentPage}&filters=${appliedFilters.toString()}&searchString=${searchString}`
         : null,
     fetcher
   );

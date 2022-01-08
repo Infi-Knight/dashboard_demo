@@ -4,6 +4,7 @@ import { Invoice, InvoiceStatus } from '@/types/invoice';
 import { PaginationDataType } from '@/api/invoices';
 
 export const clubsAtom = atom<string[]>([]);
+export const searchAtom = atom('');
 export const currentPageAtom = atom<number>(1);
 export const filterTabOpenAtom = atom<boolean>(false);
 export const appliedFiltersAtom = atom<InvoiceStatus[]>([]);
