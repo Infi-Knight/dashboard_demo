@@ -135,7 +135,6 @@ function AppliedFilters() {
         return (
           <StatusBadge
             key={status}
-            badgeWithAmount={false}
             labelClassesOverrides="bg-gray-200 cursor-pointer"
             onClick={(e) => handleFilterClick(e, status)}
             CustomIcon={RemoveIcon}

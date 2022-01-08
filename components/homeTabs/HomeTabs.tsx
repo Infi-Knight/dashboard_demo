@@ -6,6 +6,7 @@ import {
   invoicesAtom,
   currentPageAtom,
   paginationDataAtom,
+  appliedFiltersAtom,
 } from '@/store/store';
 
 import { Button } from '@/components/button';
@@ -19,7 +20,7 @@ import { InvoicesPanel } from './InvoicesPanel';
 export const HomeTabs = (): JSX.Element => {
   const [invoices] = useAtom(invoicesAtom);
   const [paginationData] = useAtom(paginationDataAtom);
-  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const [, setCurrentPage] = useAtom(currentPageAtom);
 
   return (
     <Tabs>
@@ -69,6 +70,7 @@ function Pagination({
   invoices: any;
   setCurrentPage: any;
 }) {
+  const [appliedFilters] = useAtom(appliedFiltersAtom);
   const { total, perPageLimit, currentPage } = paginationData;
   const totalPages = Math.ceil(total / perPageLimit);
 
@@ -78,10 +80,10 @@ function Pagination({
   const inactivePageClasses = 'px-1 py-2 text-gray-600 cursor-pointer';
 
   return (
-    <div className="flex flex-col items-center pb-8 mx-0 mt-4 md:mx-6 lg:mx-12">
+    <div className="flex flex-col items-center pb-8 mx-0 mt-4 md:mx-6 lg:mx-12 select-none">
       <span className="self-end hidden text-xs text-gray-700 lg:block">
-        Displaying {(currentPage - 1) * perPageLimit + invoices.length} of{' '}
-        {total} items
+        {appliedFilters.length > 0 ? 'Filtering' : 'Displaying'}{' '}
+        {(currentPage - 1) * perPageLimit + invoices.length} of {total} items
       </span>
       <div className="flex items-center justify-center mx-auto gap-[20.5px] mt-8 lg:mt-0">
         <Button
