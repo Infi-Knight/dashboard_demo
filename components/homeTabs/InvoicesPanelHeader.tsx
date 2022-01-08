@@ -100,7 +100,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
         <Filter setIsFilterTabOpen={setIsFilterTabOpen} />
       </div>
 
-      {appliedFilters.length > 0 && (
+      {appliedFilters.length > 0 && !isFilterTabOpen && (
         <div className="order-4 w-full md:order-5 lg:pt-2">
           <AppliedFilters />
         </div>

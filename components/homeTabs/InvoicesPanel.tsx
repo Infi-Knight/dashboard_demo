@@ -17,11 +17,11 @@ import {
 
 export const InvoicesPanel = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
-  const [,setPaginationData] = useAtom(paginationDataAtom);
+  const [, setPaginationData] = useAtom(paginationDataAtom);
   const [clubs, setClubs] = useAtom(clubsAtom);
   const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
   const [invoices, setInvoices] = useAtom(invoicesAtom);
-  const [, setAppliedFilters] = useAtom(appliedFiltersAtom);
+  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
   const [, setSelectedFilters] = useAtom(selectedFiltersAtom);
 
   const { data: clubsData } = useClubs();
@@ -34,7 +34,8 @@ export const InvoicesPanel = () => {
 
   const { data: invoicesData } = useInvoicesForClub(
     selectedClub,
-    currentPage
+    currentPage,
+    appliedFilters
   );
   React.useEffect(() => {
     if (invoicesData) {
@@ -42,6 +43,10 @@ export const InvoicesPanel = () => {
       setPaginationData(invoicesData.paginationData);
     }
   }, [selectedClub, invoicesData, setInvoices, currentPage, setPaginationData]);
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [appliedFilters]);
 
   React.useEffect(() => {
     // reset filters on club change and take to page 1

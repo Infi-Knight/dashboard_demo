@@ -44,21 +44,33 @@ for (const club of clubs) {
   clubToInvoices.set(club, invoice);
 }
 
+export type PaginationDataType = {
+  total: number;
+  perPageLimit: number;
+  currentPage: number;
+};
 export type InvoiceResponseType = {
   invoices: Invoice[];
-  paginationData: {
-    total: number;
-    currentPage: number;
-    perPageLimit: number;
-  };
+  paginationData: PaginationDataType;
 };
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>
 ) {
-  let { club, page } = req.query as { club: string; page: string };
-  if (page === undefined) page = '1';
-  const invoices = clubToInvoices.get(club) || [];
+  let { club, page, filters } = req.query as {
+    club: string;
+    page: string;
+    filters: string[];
+  };
+  let invoices = clubToInvoices.get(club) || [];
+  if (filters.length > 0) {
+    invoices = invoices
+      .filter((invoice) => {
+        const invoiceStatus = invoice.status.toString();
+        return filters.includes(invoiceStatus);
+      })
+      .map((invoice, index) => ({ ...invoice, invoiceNumber: index + 1 }));
+  }
 
   const totalInvoicesCount = invoices.length;
   const start = (parseInt(page) - 1) * LIMIT;

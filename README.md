@@ -4,10 +4,8 @@
 
 ## Flow
 
-- the line 'Showing .. of ... items' will not work properly when filters are applied as it requires the count of filtered items for entire dataset from server but in this implementation filtering is done on a per page basis in the client itself
-
 - if a different club is choosen from the menu, the filters will be reset
-- filters will be preserved across pages (i.e the paginated data)
+- filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 
 ## TODO
 
