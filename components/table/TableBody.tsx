@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { useAtom } from 'jotai';
 
-import { Invoice } from '@/types/index';
+import { InvoiceStatus } from '@/types/index';
 import { LinkButton } from '@/components/button';
 import StatusBadge from '@/components/statusBadge';
 
@@ -10,12 +11,9 @@ import PdfIcon from '@/icons/pdf_icon.svg';
 import { getFormattedDate, getFormattedCurrency } from '@/utils/index';
 import { InvoiceRowAccordion } from './InvoiceRowAccordion';
 
-type TableBodyProps = {
-  data: Invoice[];
-};
-export const TableBody = React.memo(function TableBodyUI({
-  data,
-}: TableBodyProps) {
+import { filteredInvoicesAtom } from '@/store/store';
+export const TableBody = React.memo(function TableBodyUI() {
+  const [data] = useAtom(filteredInvoicesAtom);
   // TODO: fix responsiveness for the table on > 1280px screens. right now the width of each column
   // is hardcoded
   // One alternative is to use a html table based layout for desktop which will also preserve
@@ -30,8 +28,10 @@ export const TableBody = React.memo(function TableBodyUI({
             invoiceDate,
             dueDate,
             total,
+            remaining,
             status,
           }) => {
+            const badgeText = getBadgeText(status, remaining);
             return (
               <div
                 role="row"
@@ -53,7 +53,7 @@ export const TableBody = React.memo(function TableBodyUI({
                 </span>
                 <span role="gridcell">{getFormattedCurrency(total)}</span>
                 <span role="gridcell">
-                  <StatusBadge status={status} />
+                  <StatusBadge status={status} text={badgeText} />
                 </span>
                 <span role="gridcell" className="justify-self-center">
                   <LinkButton
@@ -90,3 +90,19 @@ export const TableBody = React.memo(function TableBodyUI({
     </>
   );
 });
+
+function getBadgeText(
+  status: InvoiceStatus,
+  remaining: number
+): string | undefined {
+  let badgeText;
+  if (
+    status === InvoiceStatus.PartlyPaid ||
+    status === InvoiceStatus.Overpaid
+  ) {
+    badgeText = getFormattedCurrency(remaining);
+  } else if (status === InvoiceStatus.Paid) {
+    badgeText = 'Fully paid';
+  }
+  return badgeText;
+}

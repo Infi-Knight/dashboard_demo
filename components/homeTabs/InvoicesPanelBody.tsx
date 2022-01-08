@@ -1,14 +1,9 @@
 import * as React from 'react';
-import { useAtom } from 'jotai';
 
 import Table from '@/components/table';
 
-import { filteredInvoicesAtom } from 'store/store';
-
 export const invoicesPanelBodyId = 'invoices-panel-body';
 export const InvoicesPanelBody = () => {
-  const [filteredInvoices] = useAtom(filteredInvoicesAtom);
-
   return (
     <>
       {/* this div makes space for filter tab when it is opened */}
@@ -18,7 +13,7 @@ export const InvoicesPanelBody = () => {
         id={invoicesPanelBodyId}
         className="mx-auto mt-[6px] border-t border-gray-200 md:border-0 md:mt-8 max-w-screen-xl"
       >
-        <Table invoices={filteredInvoices} />
+        <Table />
       </div>
     </>
   );

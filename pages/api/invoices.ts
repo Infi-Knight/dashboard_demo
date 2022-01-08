@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
 import * as faker from 'faker';
 import { clubs } from './clubs';
-import { Invoice } from '../../types';
+import { Invoice, InvoiceStatus } from '../../types';
 import { invoiceStatuses } from '../../config';
 
 faker.setLocale('sv');
@@ -19,16 +19,24 @@ const range = (len: number): Array<any> => {
 let clubToInvoices = new Map<string, Invoice[]>();
 for (const club of clubs) {
   const invoice = range(100).map((_, index) => {
+    const status =
+      invoiceStatuses[Math.floor(Math.random() * invoiceStatuses.length)];
+    const total = parseFloat(faker.commerce.price());
+    let remaining;
+    if (status === InvoiceStatus.PartlyPaid) {
+      remaining = 1 + Math.random() * total;
+    } else {
+      remaining = parseFloat(faker.commerce.price());
+    }
     return {
       invoiceNumber: index + 1,
       id: uuidv4(),
       customerName: faker.company.companyName(),
       dueDate: new Date(),
       invoiceDate: new Date(),
-      total: parseFloat(faker.commerce.price()),
-      remaining: parseFloat(faker.commerce.price()),
-      status:
-        invoiceStatuses[Math.floor(Math.random() * invoiceStatuses.length)],
+      total: total,
+      remaining: remaining,
+      status: status,
     };
   });
   clubToInvoices.set(club, invoice);
