@@ -61,27 +61,32 @@ function InvoiceFilterCheckBox({
   status,
 }: InvoiceFilterCheckboxProps) {
   const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
-  const [checkedState, setChecked] = React.useState(
-    selectedFilters.includes(status)
+  const [checked, setIsChecked] = React.useState(
+    selectedFilters.includes(status) || false
   );
 
+  React.useEffect(() => {
+    if (selectedFilters.includes(status)) {
+      setIsChecked(true);
+    } else setIsChecked(false);
+  }, [selectedFilters, status]);
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
     if (selectedFilters.includes(status)) {
       const newFilters = selectedFilters.filter((item) => item !== status);
       setSelectedFilters(newFilters);
+      setIsChecked(false);
     } else {
       const newFilters = [...selectedFilters, status];
       setSelectedFilters(newFilters);
+      setIsChecked(true);
     }
   };
 
-  const { labelBorder, labelBg, svgColor } = getCheckboxStyles(color)
-  const borderColor = checkedState ? labelBorder : 'border-transparent';
-  const bgColor = checkedState ? labelBg : 'bg-gray-100';
-  const iconStyles = checkedState
-    ? `${svgColor} mr-2.5`
-    : 'text-gray-500 mr-2.5';
+  const { labelBorder, labelBg, svgColor } = getCheckboxStyles(color);
+  const borderColor = checked ? labelBorder : 'border-transparent';
+  const bgColor = checked ? labelBg : 'bg-gray-100';
+  const iconStyles = checked ? `${svgColor} mr-2.5` : 'text-gray-500 mr-2.5';
 
   // TODO: fix keyboard focus styles e.g by a focus ring on label using focus-within. looks ugly though?
   const labelStyles = `select-none inline-flex items-center ${bgColor} p-1 pl-2.5 pr-3 border rounded-[20px] text-gray-800 cursor-pointer ${borderColor}`;
@@ -90,7 +95,7 @@ function InvoiceFilterCheckBox({
     <div className="inline-block list-none">
       <label className={labelStyles}>
         <CustomCheckboxContainer
-          checked={checkedState}
+          checked={checked}
           onChange={handleCheckboxChange}
         >
           <CustomCheckboxInput name={name} value={value} />

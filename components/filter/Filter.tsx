@@ -19,7 +19,7 @@ import DoneIcon from '@/icons/done_icon.svg';
 import DeleteIcon from '@/icons/delete_icon.svg';
 
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
-import  { InvoiceFilterCheckBoxes }  from '@/components/filter/InvoiceFilterCheckBox';
+import { InvoiceFilterCheckBoxes } from '@/components/filter/InvoiceFilterCheckBox';
 import { Button } from '@/components/button';
 
 type StatusUiDataType = {
@@ -67,21 +67,16 @@ export const invoiceStatusUiData: {
   },
 };
 
-import {
-  appliedFiltersAtom,
-  selectedFiltersAtom
-} from '@/store/store';
+import { appliedFiltersAtom, selectedFiltersAtom } from '@/store/store';
 
 export const filterTabId = 'invoice-filter-tab';
 export type FilterProps = {
   setIsFilterTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const Filter = ({
-  setIsFilterTabOpen,
-}: FilterProps): JSX.Element => {
+const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
-  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom)
-  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom)
+  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
 
   React.useEffect(() => {
     setIsFilterTabOpen(isOpen);
@@ -115,9 +110,9 @@ const Filter = ({
     <Disclosure id={filterTabId} open={isOpen} onChange={handleFilterOpen}>
       <div>
         <div className="relative">
-          {selectedFilters.length > 0 && !isOpen && (
+          {appliedFilters.length > 0 && !isOpen && (
             <span className="flex font-bold justify-center items-center text-[10px] absolute h-3.5 w-3.5 bg-primary-blue text-white rounded-full top-[-7px] right-[-7px]">
-              {selectedFilters.length}
+              {appliedFilters.length}
             </span>
           )}
 
