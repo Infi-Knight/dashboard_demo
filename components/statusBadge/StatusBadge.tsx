@@ -1,49 +1,56 @@
 import * as React from 'react';
 
-import { InvoiceStatus } from '@/types/index';
-import { invoiceStatusUiData } from '@/components/filter/Filter';
+import { InvoiceStatus, SVGIcon } from '@/types/index';
+import { invoiceStatusUiData } from '@/components/filter/utils';
 import { getCheckboxStyles } from '@/components/filter/utils';
+import { getFormattedCurrency } from '@/utils/index';
 
 // TODO: should the badge text be calculated here or passed directly to this component?
-type StatusBadgeProps = {
+interface StatusBadgeProps extends React.ComponentPropsWithRef<'div'> {
   status: InvoiceStatus;
-  partlyPaidAmountText?: string; // formatted currency string
-  overPaidAmountText?: string; // formatted currency string
-};
+  CustomIcon?: SVGIcon;
+  labelClassesOverrides?: string;
+  iconPosition?: 'left' | 'right';
+  badgeWithAmount?: boolean; // whether to show label as 'Overpaid' or 'SEK 4.000'
+  partlyPaidAmount?: number; // formatted currency string
+  overPaidAmount?: number; // formatted currency string
+}
 const StatusBadge = React.memo(function StatusBadge({
   status,
-  partlyPaidAmountText,
-  overPaidAmountText,
+  onClick,
+  partlyPaidAmount,
+  CustomIcon,
+  badgeWithAmount = true,
+  iconPosition = 'left',
+  labelClassesOverrides,
+  overPaidAmount,
 }: StatusBadgeProps) {
   const {
     statusName,
     icon: Icon,
     color,
-  } = React.useMemo(
-    () => invoiceStatusUiData[status],
-    [status]
-  );
+  } = React.useMemo(() => invoiceStatusUiData[status], [status]);
 
   let badgeText = statusName;
-  if (status === InvoiceStatus.PartlyPaid) {
-    if (partlyPaidAmountText === undefined) {
+  if (status === InvoiceStatus.PartlyPaid && badgeWithAmount) {
+    if (partlyPaidAmount === undefined) {
       // TODO: remove this default and enable errors
       badgeText = 'SEK 0.000';
       // throw new Error(
       //   `Partly paid status requires the amount that has been paid`
       // );
     } else {
-      badgeText = partlyPaidAmountText;
+      badgeText = getFormattedCurrency(partlyPaidAmount);
     }
-  } else if (status === InvoiceStatus.Overpaid) {
-    if (overPaidAmountText === undefined) {
+  } else if (status === InvoiceStatus.Overpaid && badgeWithAmount) {
+    if (overPaidAmount === undefined) {
       // TODO: remove this default and enable errors
       badgeText = 'SEK 0.000';
       // throw new Error(
       //   `Partly paid status requires the amount that has been paid`
       // );
     } else {
-      badgeText = overPaidAmountText;
+      badgeText = getFormattedCurrency(overPaidAmount);
     }
   } else if (status === InvoiceStatus.Paid) {
     badgeText = 'Fully paid';
@@ -54,13 +61,15 @@ const StatusBadge = React.memo(function StatusBadge({
     [color]
   );
 
-  const labelClasses = `inline-flex items-center ${labelBg} p-1 pl-2.5 pr-3 border rounded-[20px] border-transparent`;
-  const iconClasses = `${svgColor} mr-2.5`;
+  const labelClasses = `inline-flex items-center gap-[9.65px] ${labelBg} p-1 px-2.5 border rounded-[20px] border-transparent ${labelClassesOverrides}`;
+  const iconClasses = `${svgColor} ${
+    iconPosition === 'right' ? 'order-1' : ''
+  }`;
 
   return (
-    <div className={labelClasses}>
+    <div className={labelClasses} onClick={onClick}>
       <span className={iconClasses}>
-        <Icon />
+        {CustomIcon !== undefined ? <CustomIcon /> : <Icon />}
       </span>
       <span className="text-xs font-medium text-gray-800 font-montserrat">
         {badgeText}

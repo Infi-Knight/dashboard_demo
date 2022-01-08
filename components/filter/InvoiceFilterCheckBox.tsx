@@ -7,12 +7,12 @@ import {
   CustomCheckboxInputProps,
 } from '@reach/checkbox';
 
-import { selectedFiltersAtom } from '@/store/store';
+import { appliedFiltersAtom, selectedFiltersAtom } from '@/store/store';
 
 import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
 import { getCheckboxStyles } from '@/components/filter/utils';
 import { invoiceStatuses } from '@/config/index';
-import { invoiceStatusUiData } from './Filter';
+import { invoiceStatusUiData } from './utils';
 
 export function InvoiceFilterCheckBoxes() {
   return (
@@ -61,6 +61,7 @@ function InvoiceFilterCheckBox({
   status,
 }: InvoiceFilterCheckboxProps) {
   const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+
   const [checked, setIsChecked] = React.useState(
     selectedFilters.includes(status) || false
   );

@@ -7,65 +7,12 @@ import {
 } from '@reach/disclosure';
 
 import FilterIcon from '@/icons/filter_icon.svg';
-import OverdueIcon from '@/icons/overdue_icon.svg';
-import NotpaidIcon from '@/icons/not_paid_icon.svg';
-import PartlyPaidIcon from '@/icons/partly_paid_icon.svg';
-import CreditedIcon from '@/icons/credited_icon.svg';
-import PaidIcon from '@/icons/paid_icon.svg';
-import OverpaidIcon from '@/icons/overpaid_icon.svg';
-import CanceledIcon from '@/icons/not_paid_icon.svg';
 import ClearIcon from '@/icons/clear_icon.svg';
 import DoneIcon from '@/icons/done_icon.svg';
 import DeleteIcon from '@/icons/delete_icon.svg';
 
-import { InvoiceStatus, SVGIcon, UiColor } from '@/types/index';
 import { InvoiceFilterCheckBoxes } from '@/components/filter/InvoiceFilterCheckBox';
 import { Button } from '@/components/button';
-
-type StatusUiDataType = {
-  statusName: string;
-  icon: SVGIcon;
-  color: UiColor;
-};
-export const invoiceStatusUiData: {
-  [key in InvoiceStatus]: StatusUiDataType;
-} = {
-  [InvoiceStatus.Overdue]: {
-    statusName: 'Overdue',
-    icon: OverdueIcon,
-    color: UiColor.RED,
-  },
-  [InvoiceStatus.NotPaid]: {
-    statusName: 'Not paid',
-    icon: NotpaidIcon,
-    color: UiColor.AMBER,
-  },
-  [InvoiceStatus.PartlyPaid]: {
-    statusName: 'Partly paid',
-    icon: PartlyPaidIcon,
-    color: UiColor.VIOLET,
-  },
-  [InvoiceStatus.Credited]: {
-    statusName: 'Credited',
-    icon: CreditedIcon,
-    color: UiColor.BLUE,
-  },
-  [InvoiceStatus.Paid]: {
-    statusName: 'Paid',
-    icon: PaidIcon,
-    color: UiColor.EMERALD,
-  },
-  [InvoiceStatus.Overpaid]: {
-    statusName: 'Overpaid',
-    icon: OverpaidIcon,
-    color: UiColor.EMERALD,
-  },
-  [InvoiceStatus.Canceled]: {
-    statusName: 'Canceled',
-    icon: CanceledIcon,
-    color: UiColor.RED,
-  },
-};
 
 import { appliedFiltersAtom, selectedFiltersAtom } from '@/store/store';
 
@@ -77,6 +24,14 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
   const [isOpen, setOpen] = React.useState(false);
   const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
   const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+
+  React.useEffect(() => {
+    // if we change applied filters when the filter tab is closed, the changes should
+    // get synced to filters selected from the ui
+    if (!isOpen) {
+      setSelectedFilters(appliedFilters);
+    }
+  }, [appliedFilters, isOpen, setSelectedFilters]);
 
   React.useEffect(() => {
     setIsFilterTabOpen(isOpen);

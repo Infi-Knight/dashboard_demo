@@ -1,18 +1,26 @@
 import * as React from 'react';
 import Link from 'next/link';
+import { useAtom } from 'jotai';
 
 import ClubSelector from '@/components/clubSelector';
 import Filter from '@/components/filter';
 import Search from '@/components/search';
 import { LinkButton } from '@/components/button';
+import StatusBadge from '@/components/statusBadge';
+
+import { InvoiceStatus } from '@/types/invoice';
+
+import { appliedFiltersAtom, filterTabOpenAtom } from '@/store/store';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
+import RemoveIcon from '@/icons/remove_icon.svg';
 
-import { filterTabId } from '@/components/filter/Filter';
 import { invoicesPanelBodyId } from './InvoicesPanelBody';
+import { filterTabId } from '@/components/filter/Filter';
 
 export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
-  const [isFilterTabOpen, setIsFilterTabOpen] = React.useState<boolean>(false);
+  const [appliedFilters] = useAtom(appliedFiltersAtom);
+  const [isFilterTabOpen, setIsFilterTabOpen] = useAtom(filterTabOpenAtom);
 
   // TODO: clean up the code and fix any perf issues in this handler and associated useEffect down below
   const handlePhantomDivResize = React.useCallback(() => {
@@ -81,7 +89,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
 
   return (
     <div className="relative flex flex-wrap items-end mx-4 mt-6 md:mx-6 lg:mx-12 gap-4">
-      <div className="order-4 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
+      <div className="order-5 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}
         <div id="phantom-div-2" className="md:hidden"></div>
@@ -91,6 +99,12 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
       <div className="order-3 md:order-4 lg:order-2">
         <Filter setIsFilterTabOpen={setIsFilterTabOpen} />
       </div>
+
+      {appliedFilters.length > 0 && (
+        <div className="order-4 w-full md:order-5 lg:pt-2">
+          <AppliedFilters />
+        </div>
+      )}
 
       <div className="order-2 grow md:min-w-[351px] md:grow-0 md:order-3">
         <Search />
@@ -104,3 +118,32 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
     </div>
   );
 });
+
+function AppliedFilters() {
+  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
+
+  const handleFilterClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    status: InvoiceStatus
+  ) => {
+    setAppliedFilters(appliedFilters.filter((filter) => filter !== status));
+  };
+
+  return (
+    <div className="flex gap-2">
+      {appliedFilters.map((status) => {
+        return (
+          <StatusBadge
+            key={status}
+            badgeWithAmount={false}
+            labelClassesOverrides="bg-gray-200 cursor-pointer"
+            onClick={(e) => handleFilterClick(e, status)}
+            CustomIcon={RemoveIcon}
+            iconPosition="right"
+            status={status}
+          ></StatusBadge>
+        );
+      })}
+    </div>
+  );
+}
