@@ -85,7 +85,7 @@ function Pagination({
       </span>
       <div className="flex items-center justify-center mx-auto gap-[20.5px] mt-8 lg:mt-0">
         <Button
-          className="p-4"
+          className="p-4 pr-0"
           variant="secondary"
           Icon={ArrowLeftIcon}
           disabled={currentPage <= 1}
@@ -126,7 +126,7 @@ function Pagination({
             ))}
         </div>
         <Button
-          className="p-4"
+          className="p-4 pl-0"
           iconClasses={
             currentPage < totalPages ? 'text-gray-600' : 'text-gray-300'
           }

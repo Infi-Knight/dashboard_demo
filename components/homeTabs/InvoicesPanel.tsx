@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useAtom } from 'jotai';
 
-import { Button } from '@/components/button';
 import { InvoicesPanelHeader } from './InvoicesPanelHeader';
 import { InvoicesPanelBody } from './InvoicesPanelBody';
 import { useClubs, useInvoicesForClub } from '@/hooks/useClubsAndInvoices';
@@ -16,12 +15,9 @@ import {
   paginationDataAtom,
 } from '@/store/store';
 
-import ArrowLeftIcon from '@/icons/arrow_left.svg';
-import ArrowRightIcon from '@/icons/arrow_right.svg';
-
 export const InvoicesPanel = () => {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
-  const [paginationData, setPaginationData] = useAtom(paginationDataAtom);
+  const [,setPaginationData] = useAtom(paginationDataAtom);
   const [clubs, setClubs] = useAtom(clubsAtom);
   const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
   const [invoices, setInvoices] = useAtom(invoicesAtom);
@@ -36,7 +32,7 @@ export const InvoicesPanel = () => {
     }
   }, [clubs, clubsData, setClubs, setSelectedClub]);
 
-  const { data: invoicesData, error: invoicesError } = useInvoicesForClub(
+  const { data: invoicesData } = useInvoicesForClub(
     selectedClub,
     currentPage
   );
@@ -44,11 +40,15 @@ export const InvoicesPanel = () => {
     if (invoicesData) {
       setInvoices(invoicesData.invoices);
       setPaginationData(invoicesData.paginationData);
-      // filters should reset on invoices change
-      setSelectedFilters([]);
-      setAppliedFilters([]);
     }
-  }, [invoicesData, setInvoices, currentPage]);
+  }, [selectedClub, invoicesData, setInvoices, currentPage, setPaginationData]);
+
+  React.useEffect(() => {
+    // reset filters on club change and take to page 1
+    setCurrentPage(1);
+    setSelectedFilters([]);
+    setAppliedFilters([]);
+  }, [selectedClub, setAppliedFilters, setCurrentPage, setSelectedFilters]);
 
   return (
     <>
