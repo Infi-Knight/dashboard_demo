@@ -1,18 +1,25 @@
-import * as React from 'react'
+import * as React from 'react';
 import { useAtom } from 'jotai';
+
 import {
   invoicesAtom,
   currentPageAtom,
   paginationDataAtom,
+  invoicesErrorAtom,
+  clubsErrorAtom,
+  filterTabOpenAtom,
 } from '@/store/store';
 
 import { Button } from '@/components/button';
-import ArrowLeftIcon from '@/icons/arrow_left.svg';
 
+import ArrowLeftIcon from '@/icons/arrow_left.svg';
 import ArrowRightIcon from '@/icons/arrow_right.svg';
 
 export function Pagination() {
+  const [isInvoicesLoadingFailed] = useAtom(invoicesErrorAtom);
+  const [isClubsLoadingFailed] = useAtom(clubsErrorAtom);
   const [invoices] = useAtom(invoicesAtom);
+  const [isFilterTabOpen] = useAtom(filterTabOpenAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [{ total, perPageLimit }] = useAtom(paginationDataAtom);
 
@@ -22,6 +29,9 @@ export function Pagination() {
     'flex items-center justify-center w-8 h-8 bg-indigo-100 rounded-full text-primary-blue lg:rounded';
 
   const inactivePageClasses = 'px-1 py-2 text-gray-600 cursor-pointer';
+  if (isClubsLoadingFailed || isInvoicesLoadingFailed) {
+    return null;
+  }
 
   if (
     perPageLimit !== undefined &&
@@ -30,7 +40,11 @@ export function Pagination() {
     invoices.length > 0
   ) {
     return (
-      <div className="flex flex-col items-center pb-8 mx-0 mt-4 select-none md:mx-6 lg:mx-12">
+      <div
+        className={`${
+          isFilterTabOpen ? 'opacity-75' : 'opacity-100'
+        } flex flex-col items-center pb-8 mx-0 mt-4 select-none md:mx-6 lg:mx-12`}
+      >
         <span className="self-end hidden text-xs text-gray-700 lg:block">
           Displaying {(currentPage - 1) * perPageLimit + invoices.length} of{' '}
           {total} items

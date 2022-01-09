@@ -1,4 +1,4 @@
-# Work in progress
+# Invoice generation dashboard
 
 [demo](https://compassionate-brattain-4c4f05.netlify.app)
 
@@ -9,22 +9,24 @@
 - if a different club is choosen from the menu, the filters will be reset
 - filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 
+## Design changes
+
+- Table based layout was looking cluttered on 1024px viewport, so I took the liberty to not show a table based layout below 1280px viewport size
+
 ## TODO
 
-- responsive ui for table on larger screens
-- proper i18n setup
 - write tests
-- perf fixes
 - cleanup code
-- error handling and loading states
 
 ## libraries used
 
 - [Reach UI](https://reach.tech/) as a building block for accessible components
-- [SVGR](https://react-svgr.com/) for handling svg icons
-- [swr](https://swr.vercel.app/) for data fetching and server state
 - [jotai](https://jotai.org/) for client state management
+- [swr](https://swr.vercel.app/) for data fetching and server state management
+- [SVGR](https://react-svgr.com/) for handling svg icons
 - [react-intl](https://formatjs.io/docs/react-intl) for localization
+- [react-error-boundary](https://www.npmjs.com/package/react-error-boundary)
+- [react-focus-lock](https://www.npmjs.com/package/react-focus-lock) to lock foucs in filter ui when it is open
 
 ### Some problems I encountered and their fixes
 

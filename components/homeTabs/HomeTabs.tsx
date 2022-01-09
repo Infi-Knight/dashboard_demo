@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import {Pagination} from './Pagination'
+import { Pagination } from './Pagination';
 import { InvoicesPanel } from './InvoicesPanel';
+import { Button } from '@/components/button';
+import ErrorFallback from '@/components/errorFallback';
 
 export const HomeTabs = (): JSX.Element => {
   return (
@@ -25,8 +28,15 @@ export const HomeTabs = (): JSX.Element => {
 
             <TabPanels>
               <TabPanel>
-                <InvoicesPanel />
-                <Pagination />
+                <ErrorBoundary
+                  FallbackComponent={ErrorFallback}
+                  onReset={() => {
+                    window.location.reload();
+                  }}
+                >
+                  <InvoicesPanel />
+                  <Pagination />
+                </ErrorBoundary>
               </TabPanel>
 
               <TabPanel></TabPanel>
