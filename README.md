@@ -26,6 +26,7 @@
 - [SVGR](https://react-svgr.com/) for handling svg icons
 - [react-intl](https://formatjs.io/docs/react-intl) for localization
 - [react-error-boundary](https://www.npmjs.com/package/react-error-boundary)
+- [react-focus-lock](https://www.npmjs.com/package/react-focus-lock) to lock foucs in filter ui when it is open
 
 ### Some problems I encountered and their fixes
 
