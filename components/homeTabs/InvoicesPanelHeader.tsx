@@ -85,7 +85,7 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
   ]);
 
   return (
-    <div className="relative flex flex-wrap items-end mx-4 mt-6 md:mx-6 lg:mx-12 gap-4">
+    <div className="relative flex flex-wrap items-end mx-4 mt-6 md:mx-6 lg:mx-12 gap-4 max-w-screen-xl">
       <div className="order-5 w-full mt-4 md:order-1 md:basis-[530px] md:grow lg:basis-0">
         {/* this div makes space for filter tab when it is opened */}
         {/* this div's height is equal to the height of filter tab */}

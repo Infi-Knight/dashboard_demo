@@ -1,17 +1,22 @@
-import * as React from 'react'
+import * as React from 'react';
 import { useAtom } from 'jotai';
+
 import {
   invoicesAtom,
   currentPageAtom,
   paginationDataAtom,
+  invoicesErrorAtom,
+  clubsErrorAtom,
 } from '@/store/store';
 
 import { Button } from '@/components/button';
-import ArrowLeftIcon from '@/icons/arrow_left.svg';
 
+import ArrowLeftIcon from '@/icons/arrow_left.svg';
 import ArrowRightIcon from '@/icons/arrow_right.svg';
 
 export function Pagination() {
+  const [isInvoicesLoadingFailed] = useAtom(invoicesErrorAtom);
+  const [isClubsLoadingFailed] = useAtom(clubsErrorAtom);
   const [invoices] = useAtom(invoicesAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [{ total, perPageLimit }] = useAtom(paginationDataAtom);
@@ -22,6 +27,9 @@ export function Pagination() {
     'flex items-center justify-center w-8 h-8 bg-indigo-100 rounded-full text-primary-blue lg:rounded';
 
   const inactivePageClasses = 'px-1 py-2 text-gray-600 cursor-pointer';
+  if (isClubsLoadingFailed || isInvoicesLoadingFailed) {
+    return null
+  }
 
   if (
     perPageLimit !== undefined &&

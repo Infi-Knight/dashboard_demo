@@ -32,9 +32,11 @@ export const InvoicesPanel = () => {
 
   const { data: clubsData, error: clubsDataError } = useClubs();
   React.useEffect(() => {
-    clubsDataError === true
-      ? setIsClubsLoadingFailed(true)
-      : setIsClubsLoadingFailed(false);
+    if (clubsDataError) {
+      setIsClubsLoadingFailed(true)
+    } else {
+      setIsClubsLoadingFailed(false)
+    }
   }, [clubsDataError, setIsClubsLoadingFailed]);
   React.useEffect(() => {
     if (clubsData) {
@@ -50,9 +52,11 @@ export const InvoicesPanel = () => {
     searchString
   );
   React.useEffect(() => {
-    invoicesDataError === true
-      ? setIsInvoicesLoadingFailed(true)
-      : setIsInvoicesLoadingFailed(false);
+    if (invoicesDataError) {
+      setIsInvoicesLoadingFailed(true)
+    } else {
+      setIsInvoicesLoadingFailed(false)
+    }
   }, [invoicesDataError, setIsInvoicesLoadingFailed]);
 
   React.useEffect(() => {
@@ -83,7 +87,7 @@ export const InvoicesPanel = () => {
   return (
     <>
       <InvoicesPanelHeader />
-      {invoicesDataError && (
+      {(invoicesDataError || clubsDataError) && (
         <div className="mx-0 md:mx-6 lg:mx-12 md:mt-8 grid place-content-center text-rose-500">
           Something went wrong...
         </div>

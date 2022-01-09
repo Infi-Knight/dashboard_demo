@@ -9,12 +9,13 @@
 - if a different club is choosen from the menu, the filters will be reset
 - filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 
+## Design changes
+
+- Table based layout was looking cluttered on 1024px viewport, so I took the liberty to not show a table based layout below 1280px viewport size
+
 ## TODO
 
-- responsive ui for table on larger screens
-- proper i18n setup
 - write tests
-- perf fixes
 - cleanup code
 - error handling and loading states
 
