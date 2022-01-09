@@ -11,7 +11,7 @@
 
     [data-reach-custom-checkbox-container] {
         margin: 0;
-        width: 1px !important;
+        width: 1px !important; /* required to override reach ui styles */
         box-shadow: none;
         outline: none;
     }

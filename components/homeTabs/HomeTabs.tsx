@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import ErrorFallback from '@/components/errorFallback';
 import { Pagination } from './Pagination';
 import { InvoicesPanel } from './InvoicesPanel';
-import { Button } from '@/components/button';
-import ErrorFallback from '@/components/errorFallback';
 
 export const HomeTabs = (): JSX.Element => {
   return (
@@ -38,7 +37,7 @@ export const HomeTabs = (): JSX.Element => {
                   <Pagination />
                 </ErrorBoundary>
               </TabPanel>
-
+                  {/* empty tab panel to ensure keyboard navigation works properly */}
               <TabPanel></TabPanel>
             </TabPanels>
           </React.Fragment>

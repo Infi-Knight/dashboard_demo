@@ -19,6 +19,7 @@ import {
 } from '@/store/store';
 
 export const InvoicesPanel = () => {
+  // TODO: use a reducer here to centralize the state?
   const [, setIsInvoicesLoadingFailed] = useAtom(invoicesErrorAtom);
   const [, setIsClubsLoadingFailed] = useAtom(clubsErrorAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
@@ -87,11 +88,13 @@ export const InvoicesPanel = () => {
   return (
     <>
       <InvoicesPanelHeader />
+      {/* Error banner e.g on network failure */}
       {(invoicesDataError || clubsDataError) && (
         <div className="mx-0 md:mx-6 lg:mx-12 md:mt-8 grid place-content-center text-rose-500">
           Something went wrong...
         </div>
       )}
+      {/* Loading skeleton */}
       {!invoicesData && !invoicesDataError && (
         <div className="flex flex-col mx-0 animate-pulse gap-y-10 md:mx-6 lg:mx-12 md:mt-8">
           {Array(7)

@@ -5,15 +5,14 @@ import { useAtom } from 'jotai';
 import ClubSelector from '@/components/clubSelector';
 import Filter from '@/components/filter';
 import Search from '@/components/search';
-import { AppliedFilters } from './AppliedFilters';
+import { filterTabId } from '@/components/filter/Filter';
 import { LinkButton } from '@/components/button';
+import { AppliedFilters } from './AppliedFilters';
 
 import { appliedFiltersAtom, filterTabOpenAtom } from '@/store/store';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
-
 import { invoicesPanelBodyId } from './InvoicesPanelBody';
-import { filterTabId } from '@/components/filter/Filter';
 
 export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
   const [appliedFilters] = useAtom(appliedFiltersAtom);

@@ -3,8 +3,8 @@ import { matchSorter } from 'match-sorter';
 import { v4 as uuidv4 } from 'uuid';
 import * as faker from 'faker';
 import { clubs } from './clubs';
-import { Invoice, InvoiceStatus } from '../../types';
-import { invoiceStatuses } from '../../config';
+import { Invoice, InvoiceStatus } from '@/types/invoice';
+import { invoiceStatuses } from '@/config/index';
 
 faker.setLocale('sv');
 faker.seed(123);
@@ -54,6 +54,7 @@ export type InvoiceResponseType = {
   invoices: Invoice[];
   paginationData: PaginationDataType;
 };
+// TODO: error handling and validation stuff
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<InvoiceResponseType>

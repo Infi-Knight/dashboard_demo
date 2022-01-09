@@ -1,4 +1,5 @@
-// vanilla formatters
+// vanilla formatters, can be used without react-intl provider
+// For now I am using react-intl
 export function getFormattedDate(date: Date) {
   const dateFormatter = new Intl.DateTimeFormat('sv-SE', {
     dateStyle: 'short',
@@ -16,11 +17,11 @@ export function getFormattedDate(date: Date) {
     })
     .join('');
 }
-// TODO: initialise this only once, move to top context
-export function getFormattedCurrency(amount: number) {
+
+export function getFormattedCurrency(amount: number, currency: string) {
   const currencyFormatter = new Intl.NumberFormat(undefined, {
     style: 'currency',
-    currency: 'SEK',
+    currency: currency,
   });
   return currencyFormatter.format(amount);
 }

@@ -3,7 +3,6 @@ import * as React from 'react';
 import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
 
-// TODO: fix margins on > 1280px
 const Table = React.memo(function Table() {
   return (
     <section

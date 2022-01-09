@@ -9,18 +9,13 @@ import StatusBadge, { getBadgeText } from '@/components/statusBadge';
 import ContactIcon from '@/icons/contact_icon.svg';
 import EditIcon from '@/icons/edit_icon.svg';
 import PdfIcon from '@/icons/pdf_icon.svg';
-import { getFormattedDate, getFormattedCurrency } from '@/utils/index';
 import { InvoiceRowAccordion } from './InvoiceRowAccordion';
 
 import { invoicesAtom } from '@/store/store';
 export const TableBody = React.memo(function TableBodyUI() {
   const [data] = useAtom(invoicesAtom);
-
   const intl = useIntl();
-  // TODO: fix responsiveness for the table on > 1280px screens. right now the width of each column
-  // is hardcoded
-  // One alternative is to use a html table based layout for desktop which will also preserve
-  // the inbuilt a11y semantics. Nasty to style though
+
   return (
     <>
       <div role="presentation" className="hidden xl:block">

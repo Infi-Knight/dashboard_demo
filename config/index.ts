@@ -9,3 +9,5 @@ export const invoiceStatuses: InvoiceStatus[] = [
   InvoiceStatus.Credited,
   InvoiceStatus.Canceled,
 ];
+
+export const defaultLocale = 'sv-SE'

@@ -8,7 +8,6 @@ export enum InvoiceStatus {
   Canceled,
 }
 
-
 export type Invoice = {
   id: string;
   invoiceNumber: number;

@@ -9,13 +9,28 @@
 - if a different club is choosen from the menu, the filters will be reset
 - filters will be preserved across pages (i.e the paginated data) for the same club's invoices
 
+### Data flow
+
+- There are two backend apis: `/clubs` and `/invoices`
+- First all the clubs are fetched and the first one is choosen as default
+- Then all the invoices associated to this club are fetched and shown. Changing the club triggers call to the `invoices` api
+
+## File structure
+
+- `components`: contains react components, with most of state being located in `components/homeTabs/InvoicesPanel.tsx`
+- `config`: global constants
+- `hooks`: some hooks for data fetching
+- `icons`: svg icons with their fill color set to `currentColor`
+- `store`: contains Jotai atoms for app's state management
+- `images.d.ts`: see last heading below
 ## Design changes
 
 - Table based layout was looking cluttered on 1024px viewport, so I took the liberty to not show a table based layout below 1280px viewport size
 
-## TODO
+## What more could be done
 
 - write tests
+- perf audit
 - cleanup code
 
 ## libraries used

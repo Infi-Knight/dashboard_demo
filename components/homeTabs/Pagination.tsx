@@ -34,9 +34,9 @@ export function Pagination() {
   }
 
   if (
-    perPageLimit !== undefined &&
-    currentPage !== undefined &&
-    totalPages !== undefined &&
+    perPageLimit &&
+    currentPage &&
+    totalPages &&
     invoices.length > 0
   ) {
     return (

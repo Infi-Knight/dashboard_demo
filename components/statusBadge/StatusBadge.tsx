@@ -3,7 +3,6 @@ import * as React from 'react';
 import { InvoiceStatus, SVGIcon } from '@/types/index';
 import { invoiceStatusUiData } from '@/components/filter/utils';
 import { getCheckboxStyles } from '@/components/filter/utils';
-import { getFormattedCurrency } from '@/utils/index';
 
 // TODO: should the badge text be calculated here or passed directly to this component?
 interface StatusBadgeProps extends React.ComponentPropsWithRef<'div'> {
@@ -67,7 +66,6 @@ export function getBadgeText(
     status === InvoiceStatus.PartlyPaid ||
     status === InvoiceStatus.Overpaid
   ) {
-    badgeText = getFormattedCurrency(remaining);
     badgeText = intl.formatNumber(remaining, {
       style: 'currency',
       currency: 'SEK',

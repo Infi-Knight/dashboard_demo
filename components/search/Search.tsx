@@ -22,6 +22,7 @@ const Search = () => {
     setSearchString(e.target.value);
   }, [setSearchString]);
 
+  // search only after 300ms has passed since user stopped typing
   const debouncedOnSeachStringChange = React.useMemo(
     () => debounce(handleSearchStringChange, 300),
     [handleSearchStringChange]

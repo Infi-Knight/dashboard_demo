@@ -3,6 +3,7 @@ import { atom } from 'jotai';
 import { Invoice, InvoiceStatus } from '@/types/invoice';
 import { PaginationDataType } from '@/api/invoices';
 
+// This file contins the global state for our app
 export const invoicesErrorAtom = atom(false);
 export const clubsErrorAtom = atom(false);
 export const clubsAtom = atom<string[]>([]);
@@ -17,7 +18,9 @@ export const paginationDataAtom = atom<PaginationDataType>(
   {} as PaginationDataType
 );
 
-// use this to create client side filtering, search etc
+// use this atom to create client side filtering, search etc
+// currently we are searching and filtering using the backend
+
 // export const filteredInvoicesAtom = atom((get) => {
 //   const appliedFilters = get(appliedFiltersAtom);
 //   if (appliedFilters.length > 0) {
