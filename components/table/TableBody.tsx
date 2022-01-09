@@ -15,6 +15,7 @@ import { InvoiceRowAccordion } from './InvoiceRowAccordion';
 import { invoicesAtom } from '@/store/store';
 export const TableBody = React.memo(function TableBodyUI() {
   const [data] = useAtom(invoicesAtom);
+
   const intl = useIntl();
   // TODO: fix responsiveness for the table on > 1280px screens. right now the width of each column
   // is hardcoded

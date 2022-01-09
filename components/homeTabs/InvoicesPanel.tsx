@@ -9,24 +9,33 @@ import {
   clubsAtom,
   invoicesAtom,
   selectedClubAtom,
+  invoicesErrorAtom,
   appliedFiltersAtom,
   selectedFiltersAtom,
   currentPageAtom,
   paginationDataAtom,
   searchAtom,
+  clubsErrorAtom,
 } from '@/store/store';
 
 export const InvoicesPanel = () => {
+  const [, setIsInvoicesLoadingFailed] = useAtom(invoicesErrorAtom);
+  const [, setIsClubsLoadingFailed] = useAtom(clubsErrorAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [, setPaginationData] = useAtom(paginationDataAtom);
   const [clubs, setClubs] = useAtom(clubsAtom);
   const [searchString, setSearchString] = useAtom(searchAtom);
   const [selectedClub, setSelectedClub] = useAtom(selectedClubAtom);
-  const [invoices, setInvoices] = useAtom(invoicesAtom);
+  const [, setInvoices] = useAtom(invoicesAtom);
   const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
   const [, setSelectedFilters] = useAtom(selectedFiltersAtom);
 
-  const { data: clubsData } = useClubs();
+  const { data: clubsData, error: clubsDataError } = useClubs();
+  React.useEffect(() => {
+    clubsDataError === true
+      ? setIsClubsLoadingFailed(true)
+      : setIsClubsLoadingFailed(false);
+  }, [clubsDataError, setIsClubsLoadingFailed]);
   React.useEffect(() => {
     if (clubsData) {
       setClubs(clubsData);
@@ -34,12 +43,18 @@ export const InvoicesPanel = () => {
     }
   }, [clubs, clubsData, setClubs, setSelectedClub]);
 
-  const { data: invoicesData } = useInvoicesForClub(
+  const { data: invoicesData, error: invoicesDataError } = useInvoicesForClub(
     selectedClub,
     currentPage,
     appliedFilters,
     searchString
   );
+  React.useEffect(() => {
+    invoicesDataError === true
+      ? setIsInvoicesLoadingFailed(true)
+      : setIsInvoicesLoadingFailed(false);
+  }, [invoicesDataError, setIsInvoicesLoadingFailed]);
+
   React.useEffect(() => {
     if (invoicesData) {
       setInvoices(invoicesData.invoices);
@@ -49,19 +64,40 @@ export const InvoicesPanel = () => {
 
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [appliedFilters]);
+  }, [appliedFilters, setCurrentPage]);
 
   React.useEffect(() => {
-    // reset filters on club change and take to page 1
+    // reset filters and search string on club change and take to page 1
     setCurrentPage(1);
     setSelectedFilters([]);
     setAppliedFilters([]);
-  }, [selectedClub, setAppliedFilters, setCurrentPage, setSelectedFilters]);
+    setSearchString('');
+  }, [
+    selectedClub,
+    setAppliedFilters,
+    setCurrentPage,
+    setSearchString,
+    setSelectedFilters,
+  ]);
 
   return (
     <>
-      {selectedClub && <InvoicesPanelHeader />}
-      {invoices && <InvoicesPanelBody />}
+      <InvoicesPanelHeader />
+      {invoicesDataError && (
+        <div className="mx-0 md:mx-6 lg:mx-12 md:mt-8 grid place-content-center text-rose-500">
+          Something went wrong...
+        </div>
+      )}
+      {!invoicesData && !invoicesDataError && (
+        <div className="flex flex-col mx-0 animate-pulse gap-y-10 md:mx-6 lg:mx-12 md:mt-8">
+          {Array(7)
+            .fill(0)
+            .map((_, index) => {
+              return <div key={index} className="h-10 bg-gray-200 "></div>;
+            })}
+        </div>
+      )}
+      {invoicesData && !invoicesDataError && <InvoicesPanelBody />}
     </>
   );
 };

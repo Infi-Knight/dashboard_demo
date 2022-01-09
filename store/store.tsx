@@ -3,6 +3,8 @@ import { atom } from 'jotai';
 import { Invoice, InvoiceStatus } from '@/types/invoice';
 import { PaginationDataType } from '@/api/invoices';
 
+export const invoicesErrorAtom = atom(false);
+export const clubsErrorAtom = atom(false);
 export const clubsAtom = atom<string[]>([]);
 export const searchAtom = atom('');
 export const currentPageAtom = atom<number>(1);

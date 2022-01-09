@@ -29,10 +29,14 @@ const StatusBadge = React.memo(function StatusBadge({
 
   const badgeText = text !== undefined ? text : statusName;
 
-  const { labelBorder, labelBg, svgColor } = React.useMemo(
+  let { labelBorder, labelBg, svgColor } = React.useMemo(
     () => getCheckboxStyles(color),
     [color]
   );
+
+  if (labelClassesOverrides?.includes('bg-')) {
+    labelBg = ''
+  }
 
   const labelClasses = `inline-flex items-center gap-[9.65px] ${labelBg} p-1 px-2.5 border rounded-[20px] border-transparent ${labelClassesOverrides}`;
   const iconClasses = `${svgColor} ${

@@ -25,6 +25,10 @@ const ClubSelector = ({ id }: ClubSelectorProps) => {
     setSelectedClub(value);
   };
 
+  if (!clubs || !selectedClub) {
+    return <div className="animate-pulse h-8 bg-gray-200"></div>;
+  }
+
   return (
     <div className="grow">
       <VisuallyHidden id={labelId}>Choose a club</VisuallyHidden>

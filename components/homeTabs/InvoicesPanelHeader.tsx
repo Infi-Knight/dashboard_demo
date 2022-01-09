@@ -5,15 +5,12 @@ import { useAtom } from 'jotai';
 import ClubSelector from '@/components/clubSelector';
 import Filter from '@/components/filter';
 import Search from '@/components/search';
+import { AppliedFilters } from './AppliedFilters';
 import { LinkButton } from '@/components/button';
-import StatusBadge from '@/components/statusBadge';
-
-import { InvoiceStatus } from '@/types/invoice';
 
 import { appliedFiltersAtom, filterTabOpenAtom } from '@/store/store';
 
 import NewInvoiceIcon from '@/icons/new_invoice_icon.svg';
-import RemoveIcon from '@/icons/remove_icon.svg';
 
 import { invoicesPanelBodyId } from './InvoicesPanelBody';
 import { filterTabId } from '@/components/filter/Filter';
@@ -118,31 +115,3 @@ export const InvoicesPanelHeader = React.memo(function InvoicesPanelHeader() {
     </div>
   );
 });
-
-function AppliedFilters() {
-  const [appliedFilters, setAppliedFilters] = useAtom(appliedFiltersAtom);
-
-  const handleFilterClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    status: InvoiceStatus
-  ) => {
-    setAppliedFilters(appliedFilters.filter((filter) => filter !== status));
-  };
-
-  return (
-    <div className="flex gap-2">
-      {appliedFilters.map((status) => {
-        return (
-          <StatusBadge
-            key={status}
-            labelClassesOverrides="bg-gray-200 cursor-pointer"
-            onClick={(e) => handleFilterClick(e, status)}
-            CustomIcon={RemoveIcon}
-            iconPosition="right"
-            status={status}
-          ></StatusBadge>
-        );
-      })}
-    </div>
-  );
-}
