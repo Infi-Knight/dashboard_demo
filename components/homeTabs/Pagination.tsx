@@ -7,6 +7,7 @@ import {
   paginationDataAtom,
   invoicesErrorAtom,
   clubsErrorAtom,
+  filterTabOpenAtom,
 } from '@/store/store';
 
 import { Button } from '@/components/button';
@@ -18,6 +19,7 @@ export function Pagination() {
   const [isInvoicesLoadingFailed] = useAtom(invoicesErrorAtom);
   const [isClubsLoadingFailed] = useAtom(clubsErrorAtom);
   const [invoices] = useAtom(invoicesAtom);
+  const [isFilterTabOpen] = useAtom(filterTabOpenAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [{ total, perPageLimit }] = useAtom(paginationDataAtom);
 
@@ -28,7 +30,7 @@ export function Pagination() {
 
   const inactivePageClasses = 'px-1 py-2 text-gray-600 cursor-pointer';
   if (isClubsLoadingFailed || isInvoicesLoadingFailed) {
-    return null
+    return null;
   }
 
   if (
@@ -38,7 +40,11 @@ export function Pagination() {
     invoices.length > 0
   ) {
     return (
-      <div className="flex flex-col items-center pb-8 mx-0 mt-4 select-none md:mx-6 lg:mx-12">
+      <div
+        className={`${
+          isFilterTabOpen ? 'opacity-75' : 'opacity-100'
+        } flex flex-col items-center pb-8 mx-0 mt-4 select-none md:mx-6 lg:mx-12`}
+      >
         <span className="self-end hidden text-xs text-gray-700 lg:block">
           Displaying {(currentPage - 1) * perPageLimit + invoices.length} of{' '}
           {total} items

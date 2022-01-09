@@ -5,6 +5,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@reach/disclosure';
+import FocusLock from 'react-focus-lock';
 
 import FilterIcon from '@/icons/filter_icon.svg';
 import ClearIcon from '@/icons/clear_icon.svg';
@@ -77,60 +78,62 @@ const Filter = ({ setIsFilterTabOpen }: FilterProps): JSX.Element => {
             <FilterIcon className="h-3.5 text-primary-blue" />
           </DisclosureButton>
         </div>
-        <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded top-[130px] md:top-[140px] lg:top-[74px]">
-          <div className="grid grid-cols-1 divide-y">
-            <div className="flex items-center justify-between px-4 pt-3 pb-3 md:pt-4 md:px-6 ">
-              <span className="text-lg font-medium text-gray-700">
-                Filter results
-              </span>
-              <div className="md:hidden">
-                <Button
-                  Icon={DeleteIcon}
-                  className="text-gray-600"
-                  variant="secondary"
-                  onClick={handleFiltersReset}
-                >
-                  Clear filters
-                </Button>
+        <FocusLock>
+          <DisclosurePanel className="bg-body absolute left-0 w-full border border-gray-200 rounded top-[130px] md:top-[140px] lg:top-[74px]">
+            <div className="grid grid-cols-1 divide-y">
+              <div className="flex items-center justify-between px-4 pt-3 pb-3 md:pt-4 md:px-6 ">
+                <span className="text-lg font-medium text-gray-700">
+                  Filter results
+                </span>
+                <div className="md:hidden">
+                  <Button
+                    Icon={DeleteIcon}
+                    className="text-gray-600"
+                    variant="secondary"
+                    onClick={handleFiltersReset}
+                  >
+                    Clear filters
+                  </Button>
+                </div>
+              </div>
+              <div className="px-4 pt-5 pb-6 md:px-6">
+                <p className="font-medium text-gray-700">Invoice status</p>
+                <div className="flex flex-wrap items-center mt-4 gap-2">
+                  <InvoiceFilterCheckBoxes />
+                </div>
+              </div>
+              <div className="flex items-center justify-between px-4 py-3 md:px-6">
+                <div className="hidden md:block">
+                  <Button
+                    Icon={DeleteIcon}
+                    className="text-gray-600"
+                    variant="secondary"
+                    onClick={handleFiltersReset}
+                  >
+                    Clear filters
+                  </Button>
+                </div>
+                <div className="flex">
+                  <Button
+                    Icon={ClearIcon}
+                    variant="secondary"
+                    className="mr-6 text-red-700"
+                    onClick={handleFiltersCancel}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleFiltersSubmit}
+                    Icon={DoneIcon}
+                    type="submit"
+                  >
+                    Apply filters
+                  </Button>
+                </div>
               </div>
             </div>
-            <div className="px-4 pt-5 pb-6 md:px-6">
-              <p className="font-medium text-gray-700">Invoice status</p>
-              <div className="flex flex-wrap items-center mt-4 gap-2">
-                <InvoiceFilterCheckBoxes />
-              </div>
-            </div>
-            <div className="flex items-center justify-between px-4 py-3 md:px-6">
-              <div className="hidden md:block">
-                <Button
-                  Icon={DeleteIcon}
-                  className="text-gray-600"
-                  variant="secondary"
-                  onClick={handleFiltersReset}
-                >
-                  Clear filters
-                </Button>
-              </div>
-              <div className="flex">
-                <Button
-                  Icon={ClearIcon}
-                  variant="secondary"
-                  className="mr-6 text-red-700"
-                  onClick={handleFiltersCancel}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleFiltersSubmit}
-                  Icon={DoneIcon}
-                  type="submit"
-                >
-                  Apply filters
-                </Button>
-              </div>
-            </div>
-          </div>
-        </DisclosurePanel>
+          </DisclosurePanel>
+        </FocusLock>
       </div>
     </Disclosure>
   );
