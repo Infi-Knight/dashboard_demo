@@ -1,4 +1,4 @@
-# Work in progress
+# Invoice generation dashboard
 
 [demo](https://compassionate-brattain-4c4f05.netlify.app)
 
@@ -17,15 +17,15 @@
 
 - write tests
 - cleanup code
-- error handling and loading states
 
 ## libraries used
 
 - [Reach UI](https://reach.tech/) as a building block for accessible components
-- [SVGR](https://react-svgr.com/) for handling svg icons
-- [swr](https://swr.vercel.app/) for data fetching and server state
 - [jotai](https://jotai.org/) for client state management
+- [swr](https://swr.vercel.app/) for data fetching and server state management
+- [SVGR](https://react-svgr.com/) for handling svg icons
 - [react-intl](https://formatjs.io/docs/react-intl) for localization
+- [react-error-boundary](https://www.npmjs.com/package/react-error-boundary)
 
 ### Some problems I encountered and their fixes
 
