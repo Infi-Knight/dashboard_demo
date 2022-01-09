@@ -38,7 +38,7 @@ const StatusBadge = React.memo(function StatusBadge({
     labelBg = ''
   }
 
-  const labelClasses = `inline-flex items-center gap-[9.65px] ${labelBg} p-1 px-2.5 border rounded-[20px] border-transparent ${labelClassesOverrides}`;
+  const labelClasses = `inline-flex items-center gap-[9.65px] ${labelBg} py-1 pl-2 pr-3 border-0 rounded-[20px] ${labelClassesOverrides}`;
   const iconClasses = `${svgColor} ${
     iconPosition === 'right' ? 'order-1' : ''
   }`;

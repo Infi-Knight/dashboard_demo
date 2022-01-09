@@ -23,7 +23,7 @@ export function AppliedFilters() {
         return (
           <StatusBadge
             key={status}
-            labelClassesOverrides="bg-gray-200 cursor-pointer"
+            labelClassesOverrides="bg-gray-200 cursor-pointer border-0 pl-3 pr-2"
             onClick={(e) => handleFilterClick(e, status)}
             CustomIcon={RemoveIcon}
             iconPosition="right"
