@@ -34,9 +34,9 @@ export const InvoicesPanel = () => {
   const { data: clubsData, error: clubsDataError } = useClubs();
   React.useEffect(() => {
     if (clubsDataError) {
-      setIsClubsLoadingFailed(true)
+      setIsClubsLoadingFailed(true);
     } else {
-      setIsClubsLoadingFailed(false)
+      setIsClubsLoadingFailed(false);
     }
   }, [clubsDataError, setIsClubsLoadingFailed]);
   React.useEffect(() => {
@@ -54,9 +54,9 @@ export const InvoicesPanel = () => {
   );
   React.useEffect(() => {
     if (invoicesDataError) {
-      setIsInvoicesLoadingFailed(true)
+      setIsInvoicesLoadingFailed(true);
     } else {
-      setIsInvoicesLoadingFailed(false)
+      setIsInvoicesLoadingFailed(false);
     }
   }, [invoicesDataError, setIsInvoicesLoadingFailed]);
 
@@ -69,7 +69,7 @@ export const InvoicesPanel = () => {
 
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [appliedFilters, setCurrentPage]);
+  }, [appliedFilters, setCurrentPage, searchString]);
 
   React.useEffect(() => {
     // reset filters and search string on club change and take to page 1
