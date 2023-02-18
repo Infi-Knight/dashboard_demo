@@ -23,9 +23,7 @@
 - `icons`: svg icons with their fill color set to `currentColor`
 - `store`: contains Jotai atoms for app's state management
 - `images.d.ts`: see last heading below
-## Design changes
 
-- Table based layout was looking cluttered on 1024px viewport, so I took the liberty to not show a table based layout below 1280px viewport size
 
 ## What more could be done
 
