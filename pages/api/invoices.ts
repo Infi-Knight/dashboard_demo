@@ -6,7 +6,7 @@ import { clubs } from './clubs';
 import { Invoice, InvoiceStatus } from '@/types/invoice';
 import { invoiceStatuses } from '@/config/index';
 
-faker.setLocale('en-US');
+faker.setLocale('sv');
 faker.seed(123);
 
 const range = (len: number): Array<any> => {
